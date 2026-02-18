@@ -5,21 +5,26 @@ export interface EquipmentItem {
     image: string;
     tags: string[];
     category: string;
-    productType?: string; // e.g., "Utility Vehicle"
-    pricing?: { // Dummy pricing structure
+    productType?: string;
+    pricing?: {
         day: string;
         week: string;
         fourWeek: string;
     };
 }
 
+export interface SubCategory {
+    title: string;
+    slug: string;
+}
+
 export interface EquipmentCategory {
     id: string;
     title: string;
     slug: string;
-    description?: string; // Category description for the top of the page
+    description?: string;
     items: EquipmentItem[];
-    subcategories?: string[]; // For sidebar expansion
+    subcategories?: SubCategory[];
 }
 
 export const RENT_CATEGORIES_DATA: EquipmentCategory[] = [
@@ -27,25 +32,76 @@ export const RENT_CATEGORIES_DATA: EquipmentCategory[] = [
         id: "aerial",
         title: "Aerial Work Platforms",
         slug: "aerial-work-platforms",
-        subcategories: ["Boom Lifts", "Scissor Lifts", "Vertical Mass Lifts"],
-        items: [], // Populated elsewhere or kept simple for now
+        description: "Rent high-quality Aerial Work Platforms (AWPs) from EquipmentShare for construction, maintenance, or elevated projects. Our inventory features scissor lifts, boom lifts, telescopic handlers, and more. Available nationwide, trust EquipmentShare rental for reliable performance from top brands like JLG, Genie, and Skytrack.",
+        subcategories: [
+            { title: "All Aerial Work Platforms", slug: "aerial-work-platforms" },
+            { title: "Articulating Boom Lift", slug: "articulating-boom-lift" },
+            { title: "Atrium Lift", slug: "atrium-lift" },
+            { title: "Electric Boom Lift", slug: "electric-boom-lift" },
+            { title: "Electric Scissor Lift", slug: "electric-scissor-lift" },
+            { title: "Push Around One Man Lift", slug: "push-around-one-man-lift" },
+            { title: "Rough Terrain Scissor Lift", slug: "rough-terrain-scissor-lift" },
+            { title: "Telescopic Boom Lift", slug: "telescopic-boom-lift" },
+            { title: "Towable Boom Lift", slug: "towable-boom-lift" },
+        ],
+        items: [
+            {
+                id: "aerial-1",
+                name: "ELECTRIC SCISSOR LIFT, 19' NARROW",
+                image: "https://images.unsplash.com/photo-1581094794329-cd194304611b?q=80&w=2940&auto=format&fit=crop",
+                tags: ["ELECTRIC SCISSOR LIFT"],
+                category: "Aerial Work Platforms",
+                productType: "ELECTRIC SCISSOR LIFT",
+                pricing: {
+                    day: "$-",
+                    week: "$-",
+                    fourWeek: "$-",
+                }
+            },
+            {
+                id: "aerial-2",
+                name: "VERTICAL MAST LIFT SINGLE OPERATOR, 20'",
+                image: "https://images.unsplash.com/photo-1629804558552-e6176d6537eb?q=80&w=2940&auto=format&fit=crop",
+                tags: ["VERTICAL MAST LIFT"],
+                category: "Aerial Work Platforms",
+                productType: "VERTICAL MAST LIFT",
+                pricing: {
+                    day: "$-",
+                    week: "$-",
+                    fourWeek: "$-",
+                }
+            },
+            {
+                id: "aerial-3",
+                name: "ARTICULATING BOOM LIFT, 45'",
+                image: "https://images.unsplash.com/photo-1579621970563-ebec7560eb3e?q=80&w=2836&auto=format&fit=crop",
+                tags: ["ARTICULATING BOOM LIFT"],
+                category: "Aerial Work Platforms",
+                productType: "ARTICULATING BOOM LIFT",
+                pricing: {
+                    day: "$-",
+                    week: "$-",
+                    fourWeek: "$-",
+                }
+            }
+        ],
     },
     {
         id: "ag-landscaping",
         title: "Agriculture & Landscaping",
         slug: "agriculture-landscaping",
-        description: "EquipmentRent offers a wide selection of agriculture and landscaping rentals to help you get the job done. From powerful stump grinders and chippers for effective debris management, to versatile machines for forestry and land clearing, our fleet is built for performance and reliability. With trusted brands like Kubota, Polaris, and Stihl, you're sure to find the right equipment to help handle any project with confidence.",
+        description: "EquipmentRent offers a wide selection of agriculture and landscaping rentals to help you get the job done. From powerful stump grinders and chippers for effective debris management, to versatile machines for forestry and land clearing, our fleet is built for performance and reliability.",
         subcategories: [
-            "All Agriculture & Landscaping",
-            "Landscaping Power Tool",
-            "Stump Grinder and Chipper",
-            "Utility Vehicle"
+            { title: "All Agriculture & Landscaping", slug: "agriculture-landscaping" },
+            { title: "Landscaping Power Tool", slug: "landscaping-power-tool" },
+            { title: "Stump Grinder and Chipper", slug: "stump-grinder-and-chipper" },
+            { title: "Utility Vehicle", slug: "utility-vehicle" }
         ],
         items: [
             {
                 id: "uv-1",
                 name: "4 WHEEL BURDEN CARRIER, ELECTRIC",
-                image: "https://images.unsplash.com/photo-1626847037657-fd3622613ce3?q=80&w=2000&auto=format&fit=crop", // Placeholder resembling util vehicle
+                image: "https://images.unsplash.com/photo-1626847037657-fd3622613ce3?q=80&w=2000&auto=format&fit=crop",
                 tags: ["UTILITY VEHICLE"],
                 category: "Agriculture & Landscaping",
                 productType: "Utility Vehicle",
@@ -58,7 +114,7 @@ export const RENT_CATEGORIES_DATA: EquipmentCategory[] = [
             {
                 id: "uv-2",
                 name: "UTILITY VEHICLE 2 - 3 PASSENGER, DIESEL",
-                image: "https://images.unsplash.com/photo-1533473359331-0135ef1bcfb0?q=80&w=2000&auto=format&fit=crop", // Placeholder
+                image: "https://images.unsplash.com/photo-1533473359331-0135ef1bcfb0?q=80&w=2000&auto=format&fit=crop",
                 tags: ["UTILITY VEHICLE"],
                 category: "Agriculture & Landscaping",
                 productType: "Utility Vehicle",
@@ -74,99 +130,69 @@ export const RENT_CATEGORIES_DATA: EquipmentCategory[] = [
         id: "earthmoving",
         title: "Earthmoving",
         slug: "earthmoving",
-        subcategories: ["Excavators", "Dozers", "Backhoes"],
-        items: [],
-    },
-    // ... we can expand others as needed, keeping minimal for now to focus on the requested feature
-];
-
-// Helper to keep the simple string list if needed, or we can derive it
-export const RENT_CATEGORIES = RENT_CATEGORIES_DATA.map(c => c.title);
-
-// Re-exporting the section data used on the main page, maybe we merge these concepts eventually
-export const EQUIPMENT_SECTIONS: EquipmentCategory[] = [
-    {
-        id: "aerial",
-        title: "Aerial Work Platforms",
-        slug: "aerial-work-platforms",
-        items: [
-            {
-                id: "1",
-                name: "ELECTRIC SCISSOR LIFT",
-                image: "https://images.unsplash.com/photo-1581094794329-cd194304611b?q=80&w=2940&auto=format&fit=crop", // Placeholder
-                tags: ["CORE SOLUTIONS"],
-                category: "Aerial Work Platforms",
-            },
-            {
-                id: "2",
-                name: "ARTICULATING BOOM LIFT",
-                image: "https://images.unsplash.com/photo-1579621970563-ebec7560eb3e?q=80&w=2836&auto=format&fit=crop", // Placeholder
-                tags: ["CORE SOLUTIONS"],
-                category: "Aerial Work Platforms",
-            },
-            {
-                id: "3",
-                name: "TELESCOPIC BOOM LIFT",
-                image: "https://images.unsplash.com/photo-1563725697669-79ae3e1c667d?q=80&w=2942&auto=format&fit=crop", // Placeholder
-                tags: ["CORE SOLUTIONS"],
-                category: "Aerial Work Platforms",
-            },
+        description: "Move the earth with power and precision.",
+        subcategories: [
+            { title: "All Earthmoving", slug: "earthmoving" },
+            { title: "Excavators", slug: "excavators" },
+            { title: "Dozers", slug: "dozers" }
         ],
-    },
-    {
-        id: "earthmoving",
-        title: "Earthmoving",
-        slug: "earthmoving",
         items: [
             {
-                id: "4",
-                name: "MINI EXCAVATOR",
+                id: "earth-1",
+                name: "MINI EXCAVATOR, 3.5 TON",
                 image: "https://images.unsplash.com/photo-1578335964645-56d11f185786?q=80&w=2940&auto=format&fit=crop",
-                tags: ["CORE SOLUTIONS"],
+                tags: ["MINI EXCAVATOR"],
                 category: "Earthmoving",
-            },
-            {
-                id: "5",
-                name: "BACKHOE AND SKIP LOADER",
-                image: "https://images.unsplash.com/photo-1517596853123-0df0b4f8841a?q=80&w=2942&auto=format&fit=crop",
-                tags: ["CORE SOLUTIONS"],
-                category: "Earthmoving",
-            },
-            {
-                id: "6",
-                name: "DOZER",
-                image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2940&auto=format&fit=crop",
-                tags: ["CORE SOLUTIONS"],
-                category: "Earthmoving",
-            },
-        ],
-    },
-    {
-        id: "forklifts",
-        title: "Forklifts & Material Handling",
-        slug: "forklifts",
-        items: [
-            {
-                id: "7",
-                name: "TELEHANDLER",
-                image: "https://images.unsplash.com/photo-1550953685-6f81e3381a7b?q=80&w=2940&auto=format&fit=crop",
-                tags: ["CORE & TOOLING SOLUTIONS"],
-                category: "Forklifts & Material Handling",
-            },
-            {
-                id: "8",
-                name: "INDUSTRIAL FORKLIFT",
-                image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2940&auto=format&fit=crop",
-                tags: ["CORE & TOOLING SOLUTIONS"],
-                category: "Forklifts & Material Handling",
-            },
-            {
-                id: "9",
-                name: "ROUGH TERRAIN FORKLIFT",
-                image: "https://images.unsplash.com/photo-1629804558552-e6176d6537eb?q=80&w=2940&auto=format&fit=crop",
-                tags: ["CORE & TOOLING SOLUTIONS"],
-                category: "Forklifts & Material Handling",
+                productType: "Mini Excavator",
+                pricing: {
+                    day: "$-",
+                    week: "$-",
+                    fourWeek: "$-",
+                }
             },
         ],
     },
 ];
+
+export const EQUIPMENT_SECTIONS = RENT_CATEGORIES_DATA;
+
+// Helper to find category data by slug (checking both main categories and subcategories)
+// For subcategories, we might need to filter items or return generic pages if we don't have specific data
+export const getCategoryData = (slug: string) => {
+    // 1. Check main categories
+    const mainCategory = RENT_CATEGORIES_DATA.find(c => c.slug === slug);
+    if (mainCategory) return mainCategory;
+
+    // 2. Check if it matches a subcategory
+    // For now, if it's a subcategory, we'll return a filtered version of the parent category
+    // or just the parent category with a filtered title/items if we had real data.
+    // In this dummy implementation, I'll simulate "filtering" by returning the parent but maybe changing the title?
+    // Or ideally, we should have specific data items tagged with subcategories.
+
+    for (const cat of RENT_CATEGORIES_DATA) {
+        const sub = cat.subcategories?.find(s => s.slug === slug);
+        if (sub) {
+            // Found a subcategory!
+            // Let's filter items that match this subcategory (mocking the match logic)
+            // In a real app we'd filter items by `productType` or `tags` or `subcategory_id`
+            // For this dummy data, I'll try to fuzzy match items or return all items if none match
+
+            // Simple mapping for demo:
+            const filteredItems = cat.items.filter(item =>
+                item.name.toLowerCase().includes(sub.title.toLowerCase()) ||
+                item.tags.some(t => t.toLowerCase() === sub.title.toLowerCase()) ||
+                item.productType?.toLowerCase() === sub.title.toLowerCase()
+            );
+
+            return {
+                ...cat,
+                title: sub.title,
+                slug: sub.slug,
+                description: `Rent ${sub.title} equipment. ${cat.description}`,
+                items: filteredItems.length > 0 ? filteredItems : cat.items // Fallback to all if empty for demo
+            };
+        }
+    }
+
+    return null;
+};

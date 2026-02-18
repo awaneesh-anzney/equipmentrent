@@ -61,10 +61,10 @@ export function CategorySidebar() {
                                     {category.subcategories.map((sub, idx) => (
                                         <li key={idx}>
                                             <Link
-                                                href={`/rent/categories/${category.slug}`}
+                                                href={`/rent/categories/${sub.slug}`}
                                                 className="block py-1.5 text-xs text-gray-500 hover:text-primary transition-colors"
                                             >
-                                                {sub}
+                                                {sub.title}
                                             </Link>
                                         </li>
                                     ))}

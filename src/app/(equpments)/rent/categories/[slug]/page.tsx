@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { RENT_CATEGORIES_DATA } from '@/data/rent-data';
+import { RENT_CATEGORIES_DATA, getCategoryData } from '@/data/rent-data';
 import { notFound } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
@@ -15,9 +15,15 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     // Wait for params to be available
     const { slug } = await params;
 
-    const category = RENT_CATEGORIES_DATA.find((cat) => cat.slug === slug);
+    // Use the helper to find data by slug (main category or subcategory)
+    const category = getCategoryData(slug);
 
-    if (!category) {
+    // Also find the parent category to show correct sidebar hierarchy if we are in a subcategory
+    const parentCategory = RENT_CATEGORIES_DATA.find(c =>
+        c.slug === slug || c.subcategories?.some(s => s.slug === slug)
+    );
+
+    if (!category || !parentCategory) {
         notFound();
     }
 
@@ -31,7 +37,7 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                         <ChevronRight className="h-3 w-3 text-gray-600" />
                         <Link href="/rent" className="hover:text-white transition-colors">Rent Equipment</Link>
                         <ChevronRight className="h-3 w-3 text-gray-600" />
-                        <span className="text-white">{category.title}</span>
+                        <span className="text-white">{parentCategory.title !== category.title ? `${parentCategory.title} / ${category.title}` : category.title}</span>
                     </div>
                 </div>
             </div>
@@ -51,12 +57,22 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
 
                             <h3 className="font-bold text-gray-900 border-b pb-2 mb-4">Category</h3>
                             <ul className="space-y-2">
-                                {category.subcategories?.map((sub, idx) => (
-                                    <li key={idx} className="flex items-center gap-2 text-sm text-gray-600 hover:text-primary cursor-pointer transition-colors">
-                                        <span className="h-1.5 w-1.5 rounded-full bg-primary/20 hover:bg-primary" />
-                                        {sub}
-                                    </li>
-                                ))}
+                                {/* Use parentCategory so the sidebar stays stable even when viewing a subcategory */}
+                                {parentCategory.subcategories?.map((sub, idx) => {
+                                    const isSelected = sub.slug === slug;
+                                    return (
+                                        <li key={idx} className="flex items-center gap-2 text-sm">
+                                            {/* Show orange square for selected item to match screenshot */}
+                                            {isSelected && <span className="h-2 w-2 bg-[#E85C24] rounded-sm flex-shrink-0" />}
+                                            <Link
+                                                href={`/rent/categories/${sub.slug}`}
+                                                className={`transition-colors hover:text-primary ${isSelected ? 'font-bold text-gray-900' : 'text-gray-600'}`}
+                                            >
+                                                {sub.title}
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                     </aside>
