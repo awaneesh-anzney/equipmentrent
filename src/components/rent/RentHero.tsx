@@ -28,12 +28,12 @@ export function RentHero() {
                             <h4 className="text-primary font-bold tracking-widest text-xs md:text-sm uppercase mb-3">
                                 Heavy Equipment and Tools
                             </h4>
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 tracking-tight">
+                            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 tracking-tight">
                                 Equipment Rentals
-                            </h1>
+                            </h3>
                         </div>
                         <span>
-                            <p className="text-gray-600 text-lg md:text-xl leading-relaxed max-w-3xl">
+                            <p className="text-gray-600 text-xl font-medium leading-relaxed max-w-4xl">
                                 Explore our wide selection of leading heavy equipment and tooling rental services.
                                 Rent construction equipment, aerial platforms, earthmovers, forklifts, climate control solutions,
                                 and more from our locations <a href="#" className="underline decoration-gray-400 underline-offset-4 hover:text-primary font-medium">373 nationwide</a>.
