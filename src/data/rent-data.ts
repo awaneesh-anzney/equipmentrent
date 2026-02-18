@@ -5,38 +5,85 @@ export interface EquipmentItem {
     image: string;
     tags: string[];
     category: string;
+    productType?: string; // e.g., "Utility Vehicle"
+    pricing?: { // Dummy pricing structure
+        day: string;
+        week: string;
+        fourWeek: string;
+    };
 }
 
 export interface EquipmentCategory {
     id: string;
     title: string;
     slug: string;
+    description?: string; // Category description for the top of the page
     items: EquipmentItem[];
+    subcategories?: string[]; // For sidebar expansion
 }
 
-export const RENT_CATEGORIES = [
-    "Aerial Work Platforms",
-    "Agriculture & Landscaping",
-    "Attachments",
-    "Climate Control",
-    "Compaction",
-    "Compressed Air",
-    "Concrete & Masonry",
-    "Earthmoving",
-    "Forklifts & Material Handling",
-    "Ground Protection",
-    "Industrial Tooling",
-    "Ladders & Scaffolding",
-    "Lighting and Security",
-    "Power Solutions",
-    "Power Tools & Small Equipment",
-    "Safety, Testing & Communication",
-    "Storage Solutions & Containers",
-    "Surface Preparation & Cleaning",
-    "Vehicles & Trailers",
-    "Welding, Cutting & Pipe Fabrication",
+export const RENT_CATEGORIES_DATA: EquipmentCategory[] = [
+    {
+        id: "aerial",
+        title: "Aerial Work Platforms",
+        slug: "aerial-work-platforms",
+        subcategories: ["Boom Lifts", "Scissor Lifts", "Vertical Mass Lifts"],
+        items: [], // Populated elsewhere or kept simple for now
+    },
+    {
+        id: "ag-landscaping",
+        title: "Agriculture & Landscaping",
+        slug: "agriculture-landscaping",
+        description: "EquipmentRent offers a wide selection of agriculture and landscaping rentals to help you get the job done. From powerful stump grinders and chippers for effective debris management, to versatile machines for forestry and land clearing, our fleet is built for performance and reliability. With trusted brands like Kubota, Polaris, and Stihl, you're sure to find the right equipment to help handle any project with confidence.",
+        subcategories: [
+            "All Agriculture & Landscaping",
+            "Landscaping Power Tool",
+            "Stump Grinder and Chipper",
+            "Utility Vehicle"
+        ],
+        items: [
+            {
+                id: "uv-1",
+                name: "4 WHEEL BURDEN CARRIER, ELECTRIC",
+                image: "https://images.unsplash.com/photo-1626847037657-fd3622613ce3?q=80&w=2000&auto=format&fit=crop", // Placeholder resembling util vehicle
+                tags: ["UTILITY VEHICLE"],
+                category: "Agriculture & Landscaping",
+                productType: "Utility Vehicle",
+                pricing: {
+                    day: "$-",
+                    week: "$-",
+                    fourWeek: "$-",
+                }
+            },
+            {
+                id: "uv-2",
+                name: "UTILITY VEHICLE 2 - 3 PASSENGER, DIESEL",
+                image: "https://images.unsplash.com/photo-1533473359331-0135ef1bcfb0?q=80&w=2000&auto=format&fit=crop", // Placeholder
+                tags: ["UTILITY VEHICLE"],
+                category: "Agriculture & Landscaping",
+                productType: "Utility Vehicle",
+                pricing: {
+                    day: "$-",
+                    week: "$-",
+                    fourWeek: "$-",
+                }
+            }
+        ]
+    },
+    {
+        id: "earthmoving",
+        title: "Earthmoving",
+        slug: "earthmoving",
+        subcategories: ["Excavators", "Dozers", "Backhoes"],
+        items: [],
+    },
+    // ... we can expand others as needed, keeping minimal for now to focus on the requested feature
 ];
 
+// Helper to keep the simple string list if needed, or we can derive it
+export const RENT_CATEGORIES = RENT_CATEGORIES_DATA.map(c => c.title);
+
+// Re-exporting the section data used on the main page, maybe we merge these concepts eventually
 export const EQUIPMENT_SECTIONS: EquipmentCategory[] = [
     {
         id: "aerial",
