@@ -5,6 +5,7 @@ import { useCart } from "@/contexts/CartContext";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { X, Trash2, Edit2, ShoppingCart } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { AddToCartDialog } from "@/components/commons/dialog/AddToCartDialog";
 
@@ -107,10 +108,19 @@ export function CartDialog() {
                     </div>
 
                     <div className="flex flex-col gap-3">
-                        <Button className="w-full bg-[#E85C24] hover:bg-[#d64e18] text-white font-bold uppercase tracking-wider h-11">
-                            View Cart & Checkout
-                        </Button>
-                        <Button variant="outline" className="w-full border-[#E85C24] text-[#E85C24] hover:bg-[#E85C24] hover:text-white font-bold uppercase tracking-wider h-11 bg-white">
+                        <Link href="/rent/cart" passHref>
+                            <Button
+                                className="w-full bg-[#E85C24] hover:bg-[#d64e18] text-white font-bold uppercase tracking-wider h-11"
+                                onClick={() => setCartOpen(false)}
+                            >
+                                View Cart & Checkout
+                            </Button>
+                        </Link>
+                        <Button
+                            variant="outline"
+                            className="w-full border-[#E85C24] text-[#E85C24] hover:bg-[#E85C24] hover:text-white font-bold uppercase tracking-wider h-11 bg-white"
+                            onClick={() => setCartOpen(false)}
+                        >
                             Continue Shopping
                         </Button>
                     </div>
