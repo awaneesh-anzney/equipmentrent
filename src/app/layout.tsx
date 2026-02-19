@@ -11,6 +11,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Equipment Rent",
   description: "Equipment Rental Platform",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 import { CartProvider } from "@/contexts/CartContext";
