@@ -1,15 +1,16 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { RentHero } from "@/components/rent/RentHero";
 import { CategorySidebar } from "@/components/rent/CategorySidebar";
 import { EquipmentCategorySection } from "@/components/rent/EquipmentCategorySection";
 import { EQUIPMENT_SECTIONS } from "@/data/rent-data";
+import { useLocation } from "@/contexts/LocationContext";
 
 export default function RentPage() {
     // Shared state for location, lifted from RentHero
-    const [selectedLocation, setSelectedLocation] = useState<string>("Set Location For Accurate Pricing");
+    const { selectedLocation, setSelectedLocation } = useLocation();
 
     return (
         <div className="min-h-screen bg-white">
