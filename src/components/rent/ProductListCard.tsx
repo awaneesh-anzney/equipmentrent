@@ -51,19 +51,19 @@ export function ProductListCard({ item, location, onLocationChange }: ProductLis
                     <div className="grid grid-cols-3 gap-4 mb-4 max-w-md">
                         <div>
                             <span className="text-lg font-bold text-gray-900 block">
-                                {isLocationSet ? `SAR ${dayPrice.toLocaleString()}` : "$-"}
+                                {isLocationSet ? `SAR ${dayPrice.toLocaleString()}` : "SAR -"}
                             </span>
                             <span className="text-xs text-gray-500 font-medium">/ day</span>
                         </div>
                         <div>
                             <span className="text-lg font-bold text-gray-900 block">
-                                {isLocationSet ? `SAR ${weekPrice.toLocaleString()}` : "$-"}
+                                {isLocationSet ? `SAR ${weekPrice.toLocaleString()}` : "SAR -"}
                             </span>
                             <span className="text-xs text-gray-500 font-medium">/ week</span>
                         </div>
                         <div>
                             <span className="text-lg font-bold text-gray-900 block">
-                                {isLocationSet ? `SAR ${fourWeekPrice.toLocaleString()}` : "$-"}
+                                {isLocationSet ? `SAR ${fourWeekPrice.toLocaleString()}` : "SAR -"}
                             </span>
                             <span className="text-xs text-gray-500 font-medium">/ 4-week</span>
                         </div>

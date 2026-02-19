@@ -86,19 +86,19 @@ export default function ProductClientPage({ equipment, parentCategory, subcatego
                             <div className="grid grid-cols-3 gap-8 mb-6 max-w-md border-b border-gray-100 pb-6">
                                 <div>
                                     <span className="text-2xl font-bold text-gray-900 block">
-                                        {isLocationSet ? `SAR ${dayPrice.toLocaleString()}` : "$-"}
+                                        {isLocationSet ? `SAR ${dayPrice.toLocaleString()}` : "SAR -"}
                                     </span>
                                     <span className="text-sm text-gray-500 font-medium">/ day</span>
                                 </div>
                                 <div>
                                     <span className="text-2xl font-bold text-gray-900 block">
-                                        {isLocationSet ? `SAR ${weekPrice.toLocaleString()}` : "$-"}
+                                        {isLocationSet ? `SAR ${weekPrice.toLocaleString()}` : "SAR -"}
                                     </span>
                                     <span className="text-sm text-gray-500 font-medium">/ week</span>
                                 </div>
                                 <div>
                                     <span className="text-2xl font-bold text-gray-900 block">
-                                        {isLocationSet ? `SAR ${fourWeekPrice.toLocaleString()}` : "$-"}
+                                        {isLocationSet ? `SAR ${fourWeekPrice.toLocaleString()}` : "SAR -"}
                                     </span>
                                     <span className="text-sm text-gray-500 font-medium">/ 4-week</span>
                                 </div>
