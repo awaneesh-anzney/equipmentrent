@@ -11,19 +11,45 @@ import { useCart } from "@/contexts/CartContext";
 
 interface AddToCartDialogProps {
     item: EquipmentItem;
-    location: string;
-    onLocationChange: (location: string) => void;
+    location?: string;
+    onLocationChange?: (location: string) => void;
     initialQuantity?: number;
+    initialLocation?: string;
+    initialStartDate?: Date | null;
+    initialEndDate?: Date | null;
+    editItemIndex?: number;
     children: React.ReactNode;
 }
 
-export function AddToCartDialog({ item, location, onLocationChange, initialQuantity = 1, children }: AddToCartDialogProps) {
-    const { addToCart } = useCart();
+export function AddToCartDialog({
+    item,
+    location,
+    onLocationChange,
+    initialQuantity = 1,
+    initialLocation = "",
+    initialStartDate = null,
+    initialEndDate = null,
+    editItemIndex,
+    children
+}: AddToCartDialogProps) {
+    const { addToCart, updateCartItem } = useCart();
     const [isOpen, setIsOpen] = useState(false);
     const [quantity, setQuantity] = useState(initialQuantity);
-    // Placeholder states for dates
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+
+    // Helper to format Date to YYYY-MM-DD for input
+    const toInputDate = (d: Date | null) => {
+        if (!d) return "";
+        // Adjust for timezone offset to ensure correct date string
+        const offset = d.getTimezoneOffset();
+        const adjustedDate = new Date(d.getTime() - (offset * 60 * 1000));
+        return adjustedDate.toISOString().split('T')[0];
+    };
+
+    const [startDate, setStartDate] = useState(toInputDate(initialStartDate));
+    const [endDate, setEndDate] = useState(toInputDate(initialEndDate));
+
+    // Manage location internally if not controlled
+    const [internalLocation, setInternalLocation] = useState(location ?? initialLocation);
 
     const startDateRef = useRef<HTMLInputElement>(null);
     const endDateRef = useRef<HTMLInputElement>(null);
@@ -33,11 +59,26 @@ export function AddToCartDialog({ item, location, onLocationChange, initialQuant
         setQuantity(initialQuantity);
     }, [initialQuantity]);
 
-    const isLocationSet = location && location !== "Set Location For Accurate Pricing";
+    // Sync location if controlled prop changes
+    useEffect(() => {
+        if (location !== undefined) {
+            setInternalLocation(location);
+        }
+    }, [location]);
 
-    const dayPrice = isLocationSet ? getLocationAdjustedPrice(item.basePrice.day, location) : item.basePrice.day;
-    const weekPrice = isLocationSet ? getLocationAdjustedPrice(item.basePrice.week, location) : item.basePrice.week;
-    const fourWeekPrice = isLocationSet ? getLocationAdjustedPrice(item.basePrice.fourWeek, location) : item.basePrice.fourWeek;
+    const handleInternalLocationChange = (newLoc: string) => {
+        setInternalLocation(newLoc);
+        if (onLocationChange) {
+            onLocationChange(newLoc);
+        }
+    };
+
+    const effectiveLocation = location !== undefined ? location : internalLocation;
+    const isLocationSet = effectiveLocation && effectiveLocation !== "Set Location For Accurate Pricing";
+
+    const dayPrice = isLocationSet ? getLocationAdjustedPrice(item.basePrice.day, effectiveLocation) : item.basePrice.day;
+    const weekPrice = isLocationSet ? getLocationAdjustedPrice(item.basePrice.week, effectiveLocation) : item.basePrice.week;
+    const fourWeekPrice = isLocationSet ? getLocationAdjustedPrice(item.basePrice.fourWeek, effectiveLocation) : item.basePrice.fourWeek;
 
     const handleQuantityChange = (delta: number) => {
         setQuantity(prev => Math.max(1, prev + delta));
@@ -50,13 +91,19 @@ export function AddToCartDialog({ item, location, onLocationChange, initialQuant
     };
 
     const handleAddToCart = () => {
-        addToCart({
+        const cartItem = {
             equipment: item,
             quantity: quantity,
             startDate: startDate ? new Date(startDate) : null,
             endDate: endDate ? new Date(endDate) : null,
-            location: location
-        });
+            location: effectiveLocation
+        };
+
+        if (editItemIndex !== undefined && editItemIndex >= 0) {
+            updateCartItem(editItemIndex, cartItem);
+        } else {
+            addToCart(cartItem);
+        }
         setIsOpen(false);
     };
 
@@ -112,11 +159,11 @@ export function AddToCartDialog({ item, location, onLocationChange, initialQuant
                             <label className="text-base font-medium text-gray-800">
                                 Where is your jobsite?
                             </label>
-                            <LocationDialog onLocationSelect={onLocationChange}>
+                            <LocationDialog onLocationSelect={handleInternalLocationChange}>
                                 <div className="relative group cursor-pointer">
                                     <div className="flex items-center justify-between w-full rounded-md border border-gray-300 px-4 py-3 text-sm ring-offset-background bg-white">
                                         <span className={cn("font-medium", isLocationSet ? "text-gray-900" : "text-gray-500")}>
-                                            {isLocationSet ? location : "Select Location"}
+                                            {isLocationSet ? effectiveLocation : "Select Location"}
                                         </span>
                                         <span className="text-[#E85C24] font-bold whitespace-nowrap ml-4">
                                             Change Location
@@ -145,6 +192,7 @@ export function AddToCartDialog({ item, location, onLocationChange, initialQuant
                                     <input
                                         ref={startDateRef}
                                         type="date"
+                                        value={startDate}
                                         className="absolute inset-0 opacity-0 w-full h-full pointer-events-none"
                                         onChange={(e) => setStartDate(e.target.value)}
                                         tabIndex={-1}
@@ -167,6 +215,7 @@ export function AddToCartDialog({ item, location, onLocationChange, initialQuant
                                     <input
                                         ref={endDateRef}
                                         type="date"
+                                        value={endDate}
                                         className="absolute inset-0 opacity-0 w-full h-full pointer-events-none"
                                         onChange={(e) => setEndDate(e.target.value)}
                                         tabIndex={-1}
@@ -216,7 +265,7 @@ export function AddToCartDialog({ item, location, onLocationChange, initialQuant
                                 handleAddToCart();
                             }}
                         >
-                            Add to Cart
+                            {editItemIndex !== undefined && editItemIndex >= 0 ? "Update Cart" : "Add to Cart"}
                         </Button>
                     </div>
                 </div>

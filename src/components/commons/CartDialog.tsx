@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { X, Trash2, Edit2, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AddToCartDialog } from "@/components/commons/dialog/AddToCartDialog";
 
 export function CartDialog() {
     const { cartItems, removeFromCart, cartTotal, isCartOpen, setCartOpen } = useCart();
@@ -43,7 +44,7 @@ export function CartDialog() {
                 </div>
 
                 {/* Items List */}
-                <div className="max-h-[400px] overflow-y-auto">
+                <div className="h-[320px] overflow-y-auto">
                     {cartItems.length === 0 ? (
                         <div className="p-8 text-center text-gray-500">
                             Your cart is empty.
@@ -73,9 +74,18 @@ export function CartDialog() {
 
                                     {/* Actions */}
                                     <div className="flex flex-col gap-2 items-center justify-start pt-1">
-                                        <button className="text-[#E85C24] hover:text-[#d64e18]">
-                                            <Edit2 className="h-4 w-4" />
-                                        </button>
+                                        <AddToCartDialog
+                                            item={item.equipment}
+                                            initialQuantity={item.quantity}
+                                            initialLocation={item.location}
+                                            initialStartDate={item.startDate}
+                                            initialEndDate={item.endDate}
+                                            editItemIndex={index}
+                                        >
+                                            <button className="text-[#E85C24] hover:text-[#d64e18]">
+                                                <Edit2 className="h-4 w-4" />
+                                            </button>
+                                        </AddToCartDialog>
                                         <button
                                             onClick={() => removeFromCart(index)}
                                             className="text-[#E85C24] hover:text-[#d64e18]"

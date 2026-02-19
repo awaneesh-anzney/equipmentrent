@@ -1,3 +1,4 @@
+// ================= TYPES =================
 
 export interface EquipmentItem {
     id: string;
@@ -31,29 +32,32 @@ export interface EquipmentCategory {
     subcategories?: SubCategory[];
 }
 
-// Helper to calculate price based on location
+
+// ================= PRICE HELPER =================
+
 export const getLocationAdjustedPrice = (basePrice: number, location: string): number => {
     if (!location || location === "Set Location For Accurate Pricing") return basePrice;
 
-    // Simple deterministic hash to simulate regional pricing differences
     let hash = 0;
     for (let i = 0; i < location.length; i++) {
         hash = location.charCodeAt(i) + ((hash << 5) - hash);
     }
 
-    // Variance between -10% and +15%
-    const variance = (hash % 25) - 10;
+    const variance = (hash % 25) - 10; // -10% to +15%
     const factor = 1 + (variance / 100);
 
     return Math.round(basePrice * factor);
 };
+
+
+// ================= DATA =================
 
 export const RENT_CATEGORIES_DATA: EquipmentCategory[] = [
     {
         id: "earthmoving",
         title: "Earthmoving Machinery",
         slug: "earthmoving-machinery",
-        description: "Heavy-duty earthmoving equipment including JCBs, Poclains, and Dozers.",
+        description: "Heavy-duty earthmoving equipment for construction and mining.",
         subcategories: [
             { title: "JCBs / Backhoes", slug: "jcbs-backhoes" },
             { title: "Poclains / Excavators", slug: "poclains-excavators" },
@@ -63,119 +67,106 @@ export const RENT_CATEGORIES_DATA: EquipmentCategory[] = [
         items: [
             {
                 id: "jcb-1",
-                name: "JCB 3DX BACKHOE LOADER",
+                name: "JCB 3DX Backhoe Loader",
                 slug: "jcb-3dx-backhoe",
-                image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+                image: "/jcb-3dx-plus-backhoe-loader.jpg",
                 tags: ["JCB", "BACKHOE"],
                 category: "Earthmoving Machinery",
                 subcategorySlug: "jcbs-backhoes",
                 productType: "Backhoe Loader",
-                basePrice: {
-                    day: 900,
-                    week: 3000,
-                    fourWeek: 9500
-                },
-                description: "Versatile JCB Backhoe Loader suitable for digging, lifting, and loading."
+                basePrice: { day: 900, week: 3000, fourWeek: 9500 },
+                description: "Versatile machine for trenching, digging and loading.",
+                specs: {
+                    Engine: "76 HP",
+                    Weight: "7600 kg",
+                    Bucket: "1.1 m³"
+                }
             },
             {
-                id: "poclain-1",
-                name: "POCLAIN EXCAVATOR, 20 TON",
-                slug: "poclain-excavator-20-ton",
-                image: "https://images.unsplash.com/photo-1578335964645-56d11f185786?auto=format&fit=crop&q=80&w=800",
-                tags: ["POCLAIN", "EXCAVATOR"],
+                id: "excavator-1",
+                name: "Tata Hitachi EX200 Excavator",
+                slug: "tata-ex200",
+                image: "/tata-hitachi-ex200-excavator.jpg",
+                tags: ["EXCAVATOR"],
                 category: "Earthmoving Machinery",
                 subcategorySlug: "poclains-excavators",
-                productType: "Excavator",
-                basePrice: {
-                    day: 1400,
-                    week: 4800,
-                    fourWeek: 15000
-                },
-                description: "Heavy-duty Hydraulic Excavator (Poclain) for major earthworks."
+                productType: "Hydraulic Excavator",
+                basePrice: { day: 1400, week: 4800, fourWeek: 15000 },
+                description: "20 Ton excavator ideal for heavy excavation.",
+                specs: {
+                    Engine: "133 HP",
+                    Weight: "19.8 Ton"
+                }
             },
             {
                 id: "dozer-1",
-                name: "CRAWLER DOZER D6",
-                slug: "crawler-dozer-d6",
-                image: "https://plus.unsplash.com/premium_photo-1664303847960-586318f59035?auto=format&fit=crop&q=80&w=800",
-                tags: ["DOZER", "CRAWLER"],
+                name: "CAT D6 Crawler Dozer",
+                slug: "cat-d6-dozer",
+                image: "/CAT-D6-Crawler-Dozer.jpeg",
+                tags: ["DOZER"],
                 category: "Earthmoving Machinery",
                 subcategorySlug: "dozers",
-                productType: "Dozer",
-                basePrice: {
-                    day: 1800,
-                    week: 6000,
-                    fourWeek: 19000
-                },
-                description: "Powerful Crawler Dozer for pushing large quantities of soil."
+                productType: "Crawler Dozer",
+                basePrice: { day: 1800, week: 6000, fourWeek: 19000 },
+                description: "Used for grading and land clearing."
             },
             {
                 id: "loader-1",
-                name: "WHEEL LOADER (EARTH MOVER)",
-                slug: "wheel-loader-earth-mover",
-                image: "https://images.unsplash.com/photo-1579623807206-3843f5505e60?auto=format&fit=crop&q=80&w=800",
-                tags: ["LOADER", "EARTH MOVER"],
+                name: "Komatsu WA380 Wheel Loader",
+                slug: "komatsu-wa380",
+                image: "/Komatsu-WA380-Wheel-Loader.jpeg",
+                tags: ["LOADER"],
                 category: "Earthmoving Machinery",
                 subcategorySlug: "loaders",
                 productType: "Wheel Loader",
-                basePrice: {
-                    day: 1100,
-                    week: 3800,
-                    fourWeek: 12000
-                },
-                description: "Heavy Earth Mover Wheel Loader for material handling."
+                basePrice: { day: 1100, week: 3800, fourWeek: 12000 },
+                description: "Material handling and aggregate loading machine."
             }
-        ],
+        ]
     },
+
     {
         id: "cranes",
         title: "Cranes & Lifting",
         slug: "cranes-lifting",
-        description: "Small and Large Cranes for all lifting requirements.",
+        description: "Cranes for industrial and infrastructure lifting.",
         subcategories: [
             { title: "Small Cranes", slug: "small-cranes" },
             { title: "Large Cranes", slug: "large-cranes" },
         ],
         items: [
             {
-                id: "crane-small",
-                name: "MOBILE CRANE (SMALL), 25 TON",
-                slug: "mobile-crane-small-25-ton",
-                image: "https://images.unsplash.com/photo-1578575436955-ef29da568c6c?q=80&w=2940&auto=format&fit=crop",
-                tags: ["CRANE", "SMALL"],
+                id: "hydra-1",
+                name: "ACE Hydra 12 Ton Crane",
+                slug: "ace-hydra-12xw",
+                image: "/ACE-Hydra-12-Ton-Crane.jpg",
+                tags: ["HYDRA"],
                 category: "Cranes & Lifting",
                 subcategorySlug: "small-cranes",
-                productType: "Mobile Crane",
-                basePrice: {
-                    day: 2000,
-                    week: 7500,
-                    fourWeek: 22000
-                },
-                description: "Compact mobile crane for city and tight site lifting."
+                productType: "Pick & Carry Crane",
+                basePrice: { day: 2000, week: 7500, fourWeek: 22000 },
+                description: "Common site lifting crane used across India."
             },
             {
                 id: "crane-large",
-                name: "ALL TERRAIN CRANE (LARGE), 100 TON",
-                slug: "all-terrain-crane-large-100-ton",
-                image: "https://images.unsplash.com/photo-1531652496739-1667fb5471cd?q=80&w=2787&auto=format&fit=crop",
-                tags: ["CRANE", "LARGE", "HEAVY"],
+                name: "Liebherr 100 Ton Crane",
+                slug: "liebherr-100t",
+                image: "/Liebherr-100-Ton-Crane.jpeg",
+                tags: ["CRANE", "HEAVY"],
                 category: "Cranes & Lifting",
                 subcategorySlug: "large-cranes",
                 productType: "All Terrain Crane",
-                basePrice: {
-                    day: 5500,
-                    week: 20000,
-                    fourWeek: 65000
-                },
-                description: "Heavy duty All Terrain Crane for major construction lifts."
+                basePrice: { day: 5500, week: 20000, fourWeek: 65000 },
+                description: "Heavy infrastructure lifting crane."
             }
         ]
     },
+
     {
         id: "trucks",
         title: "Trucks & Transportation",
         slug: "trucks-transportation",
-        description: "Standard Trucks and Heavy Vehicles for transport.",
+        description: "Transport vehicles for material movement.",
         subcategories: [
             { title: "Standard Trucks", slug: "standard-trucks" },
             { title: "Trailers", slug: "trailers" },
@@ -183,38 +174,33 @@ export const RENT_CATEGORIES_DATA: EquipmentCategory[] = [
         items: [
             {
                 id: "truck-1",
-                name: "STANDARD DUMP TRUCK, 18 CUBIC METER",
-                slug: "standard-dump-truck",
-                image: "https://images.unsplash.com/photo-1591730472655-66774e1d71cb?auto=format&fit=crop&q=80&w=800",
-                tags: ["TRUCK", "STANDARD"],
+                name: "Tata Signa Dump Truck",
+                slug: "tata-dump-truck",
+                image: "/Tata-Signa-Dump-Truck.jpg",
+                tags: ["DUMP"],
                 category: "Trucks & Transportation",
                 subcategorySlug: "standard-trucks",
                 productType: "Dump Truck",
-                basePrice: {
-                    day: 700,
-                    week: 2500,
-                    fourWeek: 8000
-                },
-                description: "Standard heavy duty dump truck for material transport."
+                basePrice: { day: 700, week: 2500, fourWeek: 8000 },
+                description: "Used for sand and aggregate transport."
             },
             {
                 id: "flatbed-1",
-                name: "FLATBED TRUCK (LARGE)",
-                slug: "flatbed-truck-large",
-                image: "https://images.unsplash.com/photo-1605218427306-635bbcaf9a61?auto=format&fit=crop&q=80&w=800",
-                tags: ["TRUCK", "FLATBED"],
+                name: "Ashok Leyland Flatbed Truck",
+                slug: "ashok-leyland-flatbed",
+                image: "/Ashok-Leyland-Flatbed-Truck.jpg",
+                tags: ["FLATBED"],
                 category: "Trucks & Transportation",
                 subcategorySlug: "standard-trucks",
                 productType: "Flatbed Truck",
-                basePrice: {
-                    day: 800,
-                    week: 2800,
-                    fourWeek: 9000
-                }
+                basePrice: { day: 800, week: 2800, fourWeek: 9000 }
             }
         ]
     }
 ];
+
+
+// ================= EXPORT HELPERS =================
 
 export const EQUIPMENT_SECTIONS = RENT_CATEGORIES_DATA;
 
@@ -226,18 +212,15 @@ export const getCategoryData = (slug: string) => {
         const sub = cat.subcategories?.find(s => s.slug === slug);
         if (sub) {
             const filteredItems = cat.items.filter(item =>
-                (item.subcategorySlug === sub.slug) ||
-                item.name.toLowerCase().includes(sub.title.toLowerCase()) ||
-                item.tags.some(t => t.toLowerCase() === sub.title.toLowerCase()) ||
-                item.productType?.toLowerCase() === sub.title.toLowerCase()
+                item.subcategorySlug === sub.slug
             );
 
             return {
                 ...cat,
                 title: sub.title,
                 slug: sub.slug,
-                description: `Rent ${sub.title} equipment. ${cat.description}`,
-                items: filteredItems.length > 0 ? filteredItems : cat.items
+                description: `Rent ${sub.title}. ${cat.description}`,
+                items: filteredItems.length ? filteredItems : cat.items
             };
         }
     }
