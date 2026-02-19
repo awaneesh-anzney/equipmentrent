@@ -6,9 +6,11 @@ import { EquipmentCard } from "./EquipmentCard";
 
 interface EquipmentCategorySectionProps {
     category: EquipmentCategory;
+    location: string;
+    onLocationChange: (location: string) => void;
 }
 
-export function EquipmentCategorySection({ category }: EquipmentCategorySectionProps) {
+export function EquipmentCategorySection({ category, location, onLocationChange }: EquipmentCategorySectionProps) {
     return (
         <div className="mb-12">
             <div className="flex items-center justify-between mb-6">
@@ -19,14 +21,14 @@ export function EquipmentCategorySection({ category }: EquipmentCategorySectionP
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                 {category.items.map((item) => (
                     <div key={item.id} className="h-full">
-                        <EquipmentCard item={item} />
+                        <EquipmentCard item={item} location={location} onLocationChange={onLocationChange} />
                     </div>
                 ))}
             </div>
 
             <div className="flex justify-end mt-4">
                 <a
-                    href={`/rent/category/${category.slug}`}
+                    href={`/rent/categories/${category.slug}`}
                     className="inline-flex items-center text-xs font-bold tracking-widest text-gray-900 uppercase hover:text-primary transition-colors group"
                 >
                     See All {category.title}

@@ -2,6 +2,7 @@
 import React from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { LocationProvider } from "@/contexts/LocationContext";
 
 export default function EquipmentLayout({
     children,
@@ -10,9 +11,11 @@ export default function EquipmentLayout({
 }) {
     return (
         <div className="flex min-h-screen flex-col">
-            <Navbar theme="light" />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            <LocationProvider>
+                <Navbar theme="light" />
+                <main className="flex-1">{children}</main>
+                <Footer />
+            </LocationProvider>
         </div>
     );
 }
