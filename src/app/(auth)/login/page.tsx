@@ -1,11 +1,12 @@
-"use client";
 
-import React from 'react'
+import Login from '@/components/auth/Login'
+import { Metadata } from 'next'
 
-const page = () => {
-  return (
-    <div>Page</div>
-  )
+export const metadata: Metadata = {
+  title: 'Login - EquipmentRent',
+  description: 'Sign in to your account',
 }
 
-export default page
+export default function LoginPage() {
+  return <Login />
+}
