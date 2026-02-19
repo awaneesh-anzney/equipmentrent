@@ -7,6 +7,7 @@ import { LocationDialog } from "@/components/commons/LocationDialog";
 import { EquipmentItem, getLocationAdjustedPrice } from '@/data/rent-data';
 import { X, Minus, Plus } from 'lucide-react';
 import { cn } from "@/lib/utils";
+import { useCart } from "@/contexts/CartContext";
 
 interface AddToCartDialogProps {
     item: EquipmentItem;
@@ -17,6 +18,8 @@ interface AddToCartDialogProps {
 }
 
 export function AddToCartDialog({ item, location, onLocationChange, initialQuantity = 1, children }: AddToCartDialogProps) {
+    const { addToCart } = useCart();
+    const [isOpen, setIsOpen] = useState(false);
     const [quantity, setQuantity] = useState(initialQuantity);
     // Placeholder states for dates
     const [startDate, setStartDate] = useState("");
@@ -46,13 +49,24 @@ export function AddToCartDialog({ item, location, onLocationChange, initialQuant
         return date.toLocaleDateString('en-GB'); // DD/MM/YYYY format or prefer user's locale
     };
 
+    const handleAddToCart = () => {
+        addToCart({
+            equipment: item,
+            quantity: quantity,
+            startDate: startDate ? new Date(startDate) : null,
+            endDate: endDate ? new Date(endDate) : null,
+            location: location
+        });
+        setIsOpen(false);
+    };
+
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 {children}
             </DialogTrigger>
             <DialogContent
-                className="w-3xl p-0 gap-0 overflow-hidden bg-white sm:rounded-lg border-0"
+                className="max-w-3xl p-0 gap-0 overflow-hidden bg-white sm:rounded-lg border-0"
                 showCloseButton={false}
             >
                 <div className="relative p-4">
@@ -82,7 +96,7 @@ export function AddToCartDialog({ item, location, onLocationChange, initialQuant
                             <h3 className="text-xl font-black text-gray-900 uppercase tracking-tight mb-3">
                                 {item.name}
                             </h3>
-                            <div className="flex flex-row gap-4 text-gray-900">  
+                            <div className="flex flex-row gap-4 text-gray-900">
                                 <div><span className='text-bold text-xl text-[#E85C24]'>SAR {dayPrice}</span> <span className="text-gray-500">/ day</span></div>
                                 <div><span className='text-bold text-xl text-[#E85C24]'>SAR {weekPrice}</span> <span className="text-gray-500">/ week</span></div>
                                 <div><span className='text-bold text-xl text-[#E85C24]'>SAR {fourWeekPrice}</span> <span className="text-gray-500">/ 4-week</span></div>
@@ -193,8 +207,14 @@ export function AddToCartDialog({ item, location, onLocationChange, initialQuant
 
                     <div className="w-full mt-7 flex justify-end">
                         <Button
+                            type="button"
                             className="w-full md:w-auto min-w-[200px] h-11 bg-[#E85C24] hover:bg-[#d64e18] text-white font-bold tracking-wide rounded text-base uppercase shadow-sm"
                             size="lg"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleAddToCart();
+                            }}
                         >
                             Add to Cart
                         </Button>

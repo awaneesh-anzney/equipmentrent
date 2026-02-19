@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description: "Equipment Rental Platform",
 };
 
+import { CartProvider } from "@/contexts/CartContext";
+import { LocationProvider } from "@/contexts/LocationContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,7 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${inter.className} antialiased`}>
-        {children}
+        <LocationProvider>
+          <CartProvider>
+            {children}
+          </CartProvider>
+        </LocationProvider>
       </body>
     </html>
   );

@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
+import { CartDialog } from "@/components/commons/CartDialog";
+
+// ... inside component ...
+
 interface NavbarProps {
     theme?: "light" | "dark";
 }
@@ -112,12 +116,11 @@ const Navbar = ({ theme = "dark" }: NavbarProps) => {
                     </Button>
 
                     {/* Icons */}
+
                     <Button size="icon" variant="ghost" className={cn("hover:text-primary", textColor)}>
                         <User className="h-6 w-6" />
                     </Button>
-                    <Button size="icon" variant="ghost" className={cn("hover:text-primary", textColor)}>
-                        <ShoppingCart className="h-6 w-6" />
-                    </Button>
+                    <CartDialog />
                 </div>
 
                 {/* Mobile Menu Toggle */}
