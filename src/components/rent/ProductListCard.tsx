@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
 import { EquipmentItem, getLocationAdjustedPrice } from '@/data/rent-data';
 import { LocationDialog } from "@/components/commons/LocationDialog";
+import { AddToCartDialog } from "@/components/commons/dialog/AddToCartDialog";
 
 interface ProductListCardProps {
     item: EquipmentItem;
@@ -80,11 +81,11 @@ export function ProductListCard({ item, location, onLocationChange }: ProductLis
 
                 <div className="flex justify-end">
                     {/* Button - Wrapped in Link */}
-                    <Link href={productUrl}>
+                    <AddToCartDialog item={item} location={location} onLocationChange={onLocationChange}>
                         <Button className="bg-[#E85C24] hover:bg-[#d64e18] text-white font-bold tracking-wider rounded px-8 h-10 uppercase text-xs">
                             Add to Cart
                         </Button>
-                    </Link>
+                    </AddToCartDialog>
                 </div>
             </div>
         </div>

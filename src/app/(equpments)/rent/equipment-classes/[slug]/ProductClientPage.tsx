@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronRight, MapPin, Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { LocationDialog } from '@/components/commons/LocationDialog';
+import { AddToCartDialog } from '@/components/commons/dialog/AddToCartDialog';
 import { useLocation } from "@/contexts/LocationContext";
 import { EquipmentItem, EquipmentCategory, SubCategory, getLocationAdjustedPrice } from '@/data/rent-data';
 
@@ -139,9 +140,16 @@ export default function ProductClientPage({ equipment, parentCategory, subcatego
                                     </div>
                                 </div>
                                 <div className="flex-1 sm:pt-6">
-                                    <Button className="w-full h-12 bg-[#E85C24] hover:bg-[#d64e18] text-white font-bold tracking-wider rounded-sm text-sm uppercase shadow-sm">
-                                        Add to Cart
-                                    </Button>
+                                    <AddToCartDialog
+                                        item={equipment}
+                                        location={selectedLocation}
+                                        onLocationChange={setSelectedLocation}
+                                        initialQuantity={quantity}
+                                    >
+                                        <Button className="w-full h-12 bg-[#E85C24] hover:bg-[#d64e18] text-white font-bold tracking-wider rounded-sm text-sm uppercase shadow-sm">
+                                            Add to Cart
+                                        </Button>
+                                    </AddToCartDialog>
                                 </div>
                             </div>
 
