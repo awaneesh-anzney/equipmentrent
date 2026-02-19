@@ -2,19 +2,19 @@
 export interface EquipmentItem {
     id: string;
     name: string;
-    slug: string; // Added slug for routing
+    slug: string;
     image: string;
     tags: string[];
     category: string;
-    subcategorySlug?: string; // To help with breadcrumbs
+    subcategorySlug?: string;
     productType?: string;
-    pricing?: {
-        day: string;
-        week: string;
-        fourWeek: string;
+    basePrice: {
+        day: number;
+        week: number;
+        fourWeek: number;
     };
-    description?: string; // Detailed description for product page
-    specs?: { [key: string]: string }; // For "Additional Specs"
+    description?: string;
+    specs?: { [key: string]: string };
 }
 
 export interface SubCategory {
@@ -31,145 +31,202 @@ export interface EquipmentCategory {
     subcategories?: SubCategory[];
 }
 
+// Helper to calculate price based on location
+export const getLocationAdjustedPrice = (basePrice: number, location: string): number => {
+    if (!location || location === "Set Location For Accurate Pricing") return basePrice;
+
+    // Simple deterministic hash to simulate regional pricing differences
+    let hash = 0;
+    for (let i = 0; i < location.length; i++) {
+        hash = location.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    // Variance between -10% and +15%
+    const variance = (hash % 25) - 10;
+    const factor = 1 + (variance / 100);
+
+    return Math.round(basePrice * factor);
+};
+
 export const RENT_CATEGORIES_DATA: EquipmentCategory[] = [
     {
-        id: "aerial",
-        title: "Aerial Work Platforms",
-        slug: "aerial-work-platforms",
-        description: "Rent high-quality Aerial Work Platforms (AWPs) from EquipmentShare for construction, maintenance, or elevated projects.",
+        id: "earthmoving",
+        title: "Earthmoving Machinery",
+        slug: "earthmoving-machinery",
+        description: "Heavy-duty earthmoving equipment including JCBs, Poclains, and Dozers.",
         subcategories: [
-            { title: "All Aerial Work Platforms", slug: "aerial-work-platforms" },
-            { title: "Articulating Boom Lift", slug: "articulating-boom-lift" },
-            { title: "Atrium Lift", slug: "atrium-lift" },
-            { title: "Electric Boom Lift", slug: "electric-boom-lift" },
-            { title: "Electric Scissor Lift", slug: "electric-scissor-lift" },
-            { title: "Push Around One Man Lift", slug: "push-around-one-man-lift" },
-            { title: "Rough Terrain Scissor Lift", slug: "rough-terrain-scissor-lift" },
-            { title: "Telescopic Boom Lift", slug: "telescopic-boom-lift" },
-            { title: "Towable Boom Lift", slug: "towable-boom-lift" },
+            { title: "JCBs / Backhoes", slug: "jcbs-backhoes" },
+            { title: "Poclains / Excavators", slug: "poclains-excavators" },
+            { title: "Dozers", slug: "dozers" },
+            { title: "Loaders", slug: "loaders" },
         ],
         items: [
             {
-                id: "atrium-1",
-                name: "ATRIUM LIFT, 60' - 65'",
-                slug: "atrium-lift-60-65",
-                image: "https://images.unsplash.com/photo-1581094794329-cd194304611b?q=80&w=2940&auto=format&fit=crop", // Placeholder
-                tags: ["ATRIUM LIFT"],
-                category: "Aerial Work Platforms",
-                subcategorySlug: "atrium-lift",
-                productType: "ATRIUM LIFT",
-                pricing: {
-                    day: "$-",
-                    week: "$-",
-                    fourWeek: "$-",
+                id: "jcb-1",
+                name: "JCB 3DX BACKHOE LOADER",
+                slug: "jcb-3dx-backhoe",
+                image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+                tags: ["JCB", "BACKHOE"],
+                category: "Earthmoving Machinery",
+                subcategorySlug: "jcbs-backhoes",
+                productType: "Backhoe Loader",
+                basePrice: {
+                    day: 900,
+                    week: 3000,
+                    fourWeek: 9500
                 },
-                description: `Atrium (spider) lifts in the 60 to 65 foot class are built for access in tight, hard-to-reach areas. Stowed widths typically fit through standard double doors, and the tracked undercarriage provides low ground pressure and non-marking travel on finished floors. Outriggers level the machine on uneven surfaces for safe setup in lobbies, atriums, and other confined spaces.\n\nIn this range, platform heights are about 60—65 feet with working heights generally in the high-60s, and horizontal outreach commonly around the mid-20s to low-30s feet. Many units run on electric or bi-energy power for indoor work with the option to operate outdoors when needed. Rent a 60—65 ft atrium lift from an EquipmentShare location near you.`
+                description: "Versatile JCB Backhoe Loader suitable for digging, lifting, and loading."
             },
             {
-                id: "aerial-1",
-                name: "ELECTRIC SCISSOR LIFT, 19' NARROW",
-                slug: "electric-scissor-lift-19-narrow",
-                image: "https://images.unsplash.com/photo-1581094794329-cd194304611b?q=80&w=2940&auto=format&fit=crop",
-                tags: ["ELECTRIC SCISSOR LIFT"],
-                category: "Aerial Work Platforms",
-                subcategorySlug: "electric-scissor-lift",
-                productType: "ELECTRIC SCISSOR LIFT",
-                pricing: {
-                    day: "$-",
-                    week: "$-",
-                    fourWeek: "$-",
-                }
+                id: "poclain-1",
+                name: "POCLAIN EXCAVATOR, 20 TON",
+                slug: "poclain-excavator-20-ton",
+                image: "https://images.unsplash.com/photo-1578335964645-56d11f185786?auto=format&fit=crop&q=80&w=800",
+                tags: ["POCLAIN", "EXCAVATOR"],
+                category: "Earthmoving Machinery",
+                subcategorySlug: "poclains-excavators",
+                productType: "Excavator",
+                basePrice: {
+                    day: 1400,
+                    week: 4800,
+                    fourWeek: 15000
+                },
+                description: "Heavy-duty Hydraulic Excavator (Poclain) for major earthworks."
             },
             {
-                id: "aerial-2",
-                name: "VERTICAL MAST LIFT SINGLE OPERATOR, 20'",
-                slug: "vertical-mast-lift-20",
-                image: "https://images.unsplash.com/photo-1629804558552-e6176d6537eb?q=80&w=2940&auto=format&fit=crop",
-                tags: ["VERTICAL MAST LIFT"],
-                category: "Aerial Work Platforms",
-                productType: "VERTICAL MAST LIFT",
-                pricing: {
-                    day: "$-",
-                    week: "$-",
-                    fourWeek: "$-",
-                }
+                id: "dozer-1",
+                name: "CRAWLER DOZER D6",
+                slug: "crawler-dozer-d6",
+                image: "https://plus.unsplash.com/premium_photo-1664303847960-586318f59035?auto=format&fit=crop&q=80&w=800",
+                tags: ["DOZER", "CRAWLER"],
+                category: "Earthmoving Machinery",
+                subcategorySlug: "dozers",
+                productType: "Dozer",
+                basePrice: {
+                    day: 1800,
+                    week: 6000,
+                    fourWeek: 19000
+                },
+                description: "Powerful Crawler Dozer for pushing large quantities of soil."
             },
+            {
+                id: "loader-1",
+                name: "WHEEL LOADER (EARTH MOVER)",
+                slug: "wheel-loader-earth-mover",
+                image: "https://images.unsplash.com/photo-1579623807206-3843f5505e60?auto=format&fit=crop&q=80&w=800",
+                tags: ["LOADER", "EARTH MOVER"],
+                category: "Earthmoving Machinery",
+                subcategorySlug: "loaders",
+                productType: "Wheel Loader",
+                basePrice: {
+                    day: 1100,
+                    week: 3800,
+                    fourWeek: 12000
+                },
+                description: "Heavy Earth Mover Wheel Loader for material handling."
+            }
         ],
     },
     {
-        id: "ag-landscaping",
-        title: "Agriculture & Landscaping",
-        slug: "agriculture-landscaping",
-        description: "EquipmentRent offers a wide selection of agriculture and landscaping rentals.",
+        id: "cranes",
+        title: "Cranes & Lifting",
+        slug: "cranes-lifting",
+        description: "Small and Large Cranes for all lifting requirements.",
         subcategories: [
-            { title: "All Agriculture & Landscaping", slug: "agriculture-landscaping" },
-            { title: "Utility Vehicle", slug: "utility-vehicle" }
+            { title: "Small Cranes", slug: "small-cranes" },
+            { title: "Large Cranes", slug: "large-cranes" },
         ],
         items: [
             {
-                id: "uv-1",
-                name: "4 WHEEL BURDEN CARRIER, ELECTRIC",
-                slug: "4-wheel-burden-carrier-electric",
-                image: "https://images.unsplash.com/photo-1626847037657-fd3622613ce3?q=80&w=2000&auto=format&fit=crop",
-                tags: ["UTILITY VEHICLE"],
-                category: "Agriculture & Landscaping",
-                subcategorySlug: "utility-vehicle",
-                productType: "Utility Vehicle",
-                pricing: {
-                    day: "$-",
-                    week: "$-",
-                    fourWeek: "$-",
-                }
+                id: "crane-small",
+                name: "MOBILE CRANE (SMALL), 25 TON",
+                slug: "mobile-crane-small-25-ton",
+                image: "https://images.unsplash.com/photo-1578575436955-ef29da568c6c?q=80&w=2940&auto=format&fit=crop",
+                tags: ["CRANE", "SMALL"],
+                category: "Cranes & Lifting",
+                subcategorySlug: "small-cranes",
+                productType: "Mobile Crane",
+                basePrice: {
+                    day: 2000,
+                    week: 7500,
+                    fourWeek: 22000
+                },
+                description: "Compact mobile crane for city and tight site lifting."
             },
+            {
+                id: "crane-large",
+                name: "ALL TERRAIN CRANE (LARGE), 100 TON",
+                slug: "all-terrain-crane-large-100-ton",
+                image: "https://images.unsplash.com/photo-1531652496739-1667fb5471cd?q=80&w=2787&auto=format&fit=crop",
+                tags: ["CRANE", "LARGE", "HEAVY"],
+                category: "Cranes & Lifting",
+                subcategorySlug: "large-cranes",
+                productType: "All Terrain Crane",
+                basePrice: {
+                    day: 5500,
+                    week: 20000,
+                    fourWeek: 65000
+                },
+                description: "Heavy duty All Terrain Crane for major construction lifts."
+            }
         ]
     },
     {
-        id: "earthmoving",
-        title: "Earthmoving",
-        slug: "earthmoving",
-        description: "Move the earth with power and precision.",
+        id: "trucks",
+        title: "Trucks & Transportation",
+        slug: "trucks-transportation",
+        description: "Standard Trucks and Heavy Vehicles for transport.",
         subcategories: [
-            { title: "All Earthmoving", slug: "earthmoving" },
-            { title: "Excavators", slug: "excavators" }
+            { title: "Standard Trucks", slug: "standard-trucks" },
+            { title: "Trailers", slug: "trailers" },
         ],
         items: [
             {
-                id: "earth-1",
-                name: "MINI EXCAVATOR, 3.5 TON",
-                slug: "mini-excavator-3-5-ton",
-                image: "https://images.unsplash.com/photo-1578335964645-56d11f185786?q=80&w=2940&auto=format&fit=crop",
-                tags: ["MINI EXCAVATOR"],
-                category: "Earthmoving",
-                subcategorySlug: "excavators",
-                productType: "Mini Excavator",
-                pricing: {
-                    day: "$-",
-                    week: "$-",
-                    fourWeek: "$-",
-                }
+                id: "truck-1",
+                name: "STANDARD DUMP TRUCK, 18 CUBIC METER",
+                slug: "standard-dump-truck",
+                image: "https://images.unsplash.com/photo-1591730472655-66774e1d71cb?auto=format&fit=crop&q=80&w=800",
+                tags: ["TRUCK", "STANDARD"],
+                category: "Trucks & Transportation",
+                subcategorySlug: "standard-trucks",
+                productType: "Dump Truck",
+                basePrice: {
+                    day: 700,
+                    week: 2500,
+                    fourWeek: 8000
+                },
+                description: "Standard heavy duty dump truck for material transport."
             },
-        ],
-    },
+            {
+                id: "flatbed-1",
+                name: "FLATBED TRUCK (LARGE)",
+                slug: "flatbed-truck-large",
+                image: "https://images.unsplash.com/photo-1605218427306-635bbcaf9a61?auto=format&fit=crop&q=80&w=800",
+                tags: ["TRUCK", "FLATBED"],
+                category: "Trucks & Transportation",
+                subcategorySlug: "standard-trucks",
+                productType: "Flatbed Truck",
+                basePrice: {
+                    day: 800,
+                    week: 2800,
+                    fourWeek: 9000
+                }
+            }
+        ]
+    }
 ];
 
 export const EQUIPMENT_SECTIONS = RENT_CATEGORIES_DATA;
 
-// Helper to find category data by slug
 export const getCategoryData = (slug: string) => {
-    // 1. Check main categories
     const mainCategory = RENT_CATEGORIES_DATA.find(c => c.slug === slug);
     if (mainCategory) return mainCategory;
 
-    // 2. Check if it matches a subcategory
     for (const cat of RENT_CATEGORIES_DATA) {
         const sub = cat.subcategories?.find(s => s.slug === slug);
         if (sub) {
-            // Found a subcategory!
-            // In a real app, filtering logic would be more robust
             const filteredItems = cat.items.filter(item =>
-                // Match by explicitly assigned subcategory slug if available
                 (item.subcategorySlug === sub.slug) ||
-                // Or fuzzy match name/tags
                 item.name.toLowerCase().includes(sub.title.toLowerCase()) ||
                 item.tags.some(t => t.toLowerCase() === sub.title.toLowerCase()) ||
                 item.productType?.toLowerCase() === sub.title.toLowerCase()
@@ -180,15 +237,13 @@ export const getCategoryData = (slug: string) => {
                 title: sub.title,
                 slug: sub.slug,
                 description: `Rent ${sub.title} equipment. ${cat.description}`,
-                items: filteredItems.length > 0 ? filteredItems : cat.items // Fallback to all if empty for demo
+                items: filteredItems.length > 0 ? filteredItems : cat.items
             };
         }
     }
-
     return null;
 };
 
-// Helper to find equipment by slug
 export const getEquipmentBySlug = (slug: string): EquipmentItem | null => {
     for (const cat of RENT_CATEGORIES_DATA) {
         const item = cat.items.find(i => i.slug === slug);
