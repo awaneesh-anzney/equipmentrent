@@ -6,6 +6,7 @@ import { ChevronRight, MapPin, Minus, Plus } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { LocationDialog } from '@/components/commons/LocationDialog';
 
 interface PageProps {
     params: { slug: string };
@@ -93,12 +94,14 @@ export default async function EquipmentDetailsPage({ params }: PageProps) {
                                 </div>
                             </div>
 
-                            <button className="flex items-center gap-2 text-[#E85C24] hover:text-[#d64e18] transition-colors text-sm font-bold mb-8 group">
-                                <div className="p-1 rounded-full border border-[#E85C24] group-hover:bg-[#E85C24] group-hover:text-white transition-colors">
-                                    <MapPin className="h-3 w-3" />
-                                </div>
-                                <span className="underline underline-offset-4 decoration-[#E85C24]/30 group-hover:decoration-[#E85C24]">Set location to see prices</span>
-                            </button>
+                            <LocationDialog>
+                                <button className="flex items-center gap-2 text-[#E85C24] hover:text-[#d64e18] transition-colors text-sm font-bold mb-8 group">
+                                    <div className="p-1 rounded-full border border-[#E85C24] group-hover:bg-[#E85C24] group-hover:text-white transition-colors">
+                                        <MapPin className="h-3 w-3" />
+                                    </div>
+                                    <span className="underline underline-offset-4 decoration-[#E85C24]/30 group-hover:decoration-[#E85C24]">Set location to see prices</span>
+                                </button>
+                            </LocationDialog>
 
                             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 mb-10">
                                 <div className="flex flex-col gap-1.5">

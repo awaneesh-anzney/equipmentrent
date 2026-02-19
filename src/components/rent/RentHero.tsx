@@ -1,6 +1,7 @@
 
 import React from "react";
 import { MapPin, ChevronRight } from "lucide-react";
+import { LocationDialog } from "@/components/commons/LocationDialog";
 
 export function RentHero() {
     return (
@@ -8,10 +9,12 @@ export function RentHero() {
             {/* Dark Top Bar */}
             <div className="bg-[#1a1a1a] text-white py-3 px-4">
                 <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm">
-                    <div className="flex items-center gap-2 mb-2 md:mb-0">
-                        <MapPin className="h-4 w-4 text-primary" />
-                        <span className="font-medium">Set Location For Accurate Pricing</span>
-                    </div>
+                    <LocationDialog>
+                        <div className="flex items-center gap-2 mb-2 md:mb-0 cursor-pointer hover:text-primary transition-colors">
+                            <MapPin className="h-4 w-4 text-primary" />
+                            <span className="font-medium">Set Location For Accurate Pricing</span>
+                        </div>
+                    </LocationDialog>
                     <div className="flex items-center gap-6 font-medium text-xs md:text-sm tracking-wide">
                         <a href="#" className="hover:text-primary transition-colors uppercase">Core Solutions</a>
                         <a href="#" className="hover:text-primary transition-colors uppercase">Advanced Solutions</a>

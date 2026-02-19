@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { MapPin } from 'lucide-react';
 import { EquipmentItem } from '@/data/rent-data';
+import { LocationDialog } from "@/components/commons/LocationDialog";
 
 interface ProductListCardProps {
     item: EquipmentItem;
@@ -52,10 +53,12 @@ export function ProductListCard({ item }: ProductListCardProps) {
                         </div>
                     </div>
 
-                    <button className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium mb-6">
-                        <MapPin className="h-4 w-4" />
-                        Set location to see prices
-                    </button>
+                    <LocationDialog>
+                        <button className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium mb-6">
+                            <MapPin className="h-4 w-4" />
+                            Set location to see prices
+                        </button>
+                    </LocationDialog>
                 </div>
 
                 <div className="flex justify-end">
