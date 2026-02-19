@@ -1,5 +1,6 @@
 
 import React from "react";
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { EquipmentItem, getLocationAdjustedPrice } from "@/data/rent-data";
@@ -23,12 +24,16 @@ export function EquipmentCard({ item, location, onLocationChange }: EquipmentCar
         <Card className="group overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 bg-white rounded-none h-full flex flex-col">
             <CardContent className="p-0 flex-1 flex flex-col">
                 {/* Image Container */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-gray-50 p-6 flex items-center justify-center">
-                    <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
-                    />
+                <div className="relative aspect-[4/3] overflow-hidden bg-gray-50 flex items-center justify-center">
+                    <Link href={`/rent/equipment-classes/${item.slug}`} className="w-full h-full block">
+                        <div className="w-full h-full p-6 flex items-center justify-center">
+                            <img
+                                src={item.image}
+                                alt={item.name}
+                                className="w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                            />
+                        </div>
+                    </Link>
                 </div>
 
                 {/* Content */}
@@ -40,9 +45,11 @@ export function EquipmentCard({ item, location, onLocationChange }: EquipmentCar
                             </span>
                         ))}
                     </div>
-                    <h3 className="text-xl font-black text-gray-900 uppercase tracking-tight group-hover:text-primary transition-colors mb-4 line-clamp-2">
-                        {item.name}
-                    </h3>
+                    <Link href={`/rent/equipment-classes/${item.slug}`}>
+                        <h3 className="text-xl font-black text-gray-900 uppercase tracking-tight group-hover:text-primary transition-colors mb-4 line-clamp-2">
+                            {item.name}
+                        </h3>
+                    </Link>
 
                     <div className="mt-auto pt-4 border-t border-gray-100 text-center text-xs">
                         {!isLocationSet ? (

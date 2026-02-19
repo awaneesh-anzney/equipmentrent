@@ -28,7 +28,7 @@ export function EquipmentCategorySection({ category, location, onLocationChange 
 
             <div className="flex justify-end mt-4">
                 <a
-                    href={`/rent/category/${category.slug}`}
+                    href={`/rent/categories/${category.slug}`}
                     className="inline-flex items-center text-xs font-bold tracking-widest text-gray-900 uppercase hover:text-primary transition-colors group"
                 >
                     See All {category.title}
