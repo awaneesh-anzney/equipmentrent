@@ -1,18 +1,22 @@
 
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { MapPin, ChevronRight } from "lucide-react";
 import { LocationDialog } from "@/components/commons/LocationDialog";
 
 export function RentHero() {
+    const [locationText, setLocationText] = useState("Set Location For Accurate Pricing");
+
     return (
         <div className="w-full">
             {/* Dark Top Bar */}
             <div className="bg-[#1a1a1a] text-white py-3 px-4">
                 <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm">
-                    <LocationDialog>
+                    <LocationDialog onLocationSelect={setLocationText}>
                         <div className="flex items-center gap-2 mb-2 md:mb-0 cursor-pointer hover:text-primary transition-colors">
                             <MapPin className="h-4 w-4 text-primary" />
-                            <span className="font-medium">Set Location For Accurate Pricing</span>
+                            <span className="font-medium">{locationText}</span>
                         </div>
                     </LocationDialog>
                     <div className="flex items-center gap-6 font-medium text-xs md:text-sm tracking-wide">

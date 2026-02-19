@@ -1,7 +1,7 @@
 
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Locate, Search, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,14 +10,49 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import { saudiCities, City } from "@/data/location";
 
 interface LocationDialogProps {
     children: React.ReactNode;
+    onLocationSelect?: (location: string) => void;
 }
 
-export function LocationDialog({ children }: LocationDialogProps) {
+export function LocationDialog({ children, onLocationSelect }: LocationDialogProps) {
+    const [inputValue, setInputValue] = useState("");
+    const [suggestions, setSuggestions] = useState<City[]>([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setInputValue(value);
+
+        if (value.length > 0) {
+            const filtered = saudiCities.filter((city) =>
+                city.name.toLowerCase().includes(value.toLowerCase()) ||
+                city.shortName.toLowerCase().includes(value.toLowerCase()) ||
+                city.zipCode.includes(value)
+            );
+            setSuggestions(filtered);
+            setShowSuggestions(true);
+        } else {
+            setSuggestions([]);
+            setShowSuggestions(false);
+        }
+    };
+
+    const handleSelectCity = (city: City) => {
+        setInputValue(`${city.name} (${city.zipCode})`);
+        setSuggestions([]);
+        setShowSuggestions(false);
+        if (onLocationSelect) {
+            onLocationSelect(city.name);
+        }
+        setOpen(false);
+    };
+
     return (
-        <Popover>
+        <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 {children}
             </PopoverTrigger>
@@ -29,8 +64,25 @@ export function LocationDialog({ children }: LocationDialogProps) {
                         <Input
                             placeholder="Enter city or zip code"
                             className="pr-10 h-11 border-gray-300 text-base"
+                            value={inputValue}
+                            onChange={handleInputChange}
                         />
                         <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+
+                        {showSuggestions && suggestions.length > 0 && (
+                            <div className="absolute z-10 w-full bg-white border border-gray-200 rounded-md shadow-lg mt-1 max-h-60 overflow-y-auto">
+                                {suggestions.map((city) => (
+                                    <div
+                                        key={city.zipCode}
+                                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                                        onClick={() => handleSelectCity(city)}
+                                    >
+                                        <div className="font-medium text-gray-900">{city.name}</div>
+                                        <div className="text-gray-500 text-xs">{city.shortName} - {city.zipCode}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     <Button
@@ -41,11 +93,6 @@ export function LocationDialog({ children }: LocationDialogProps) {
                         Use My Current Location
                     </Button>
                 </div>
-
-                {/* Little arrow/triangle to match the screenshot style if needed, 
-            though PopoverContent usually handles this if configured. 
-            Shadcn's popover is built on Radix UI which has an optional arrow. 
-            For now, the clean shadow box is standard. */}
             </PopoverContent>
         </Popover>
     );
