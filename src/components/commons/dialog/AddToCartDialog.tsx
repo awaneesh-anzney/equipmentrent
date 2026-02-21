@@ -113,19 +113,19 @@ export function AddToCartDialog({
                 {children}
             </DialogTrigger>
             <DialogContent
-                className="max-w-3xl p-0 gap-0 overflow-hidden bg-white sm:rounded-lg border-0"
+                className="max-w-4xl p-0 gap-0 overflow-hidden bg-card sm:rounded-3xl border border-border/50 shadow-2xl"
                 showCloseButton={false}
             >
-                <div className="relative p-4">
+                <div className="relative p-6 md:p-8">
                     {/* Custom Close Button */}
-                    <DialogClose className="absolute top-4 right-4 rounded-full p-1 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-                        <X className="h-6 w-6 text-gray-400" />
+                    <DialogClose className="absolute top-4 right-4 rounded-full p-1 opacity-70 transition-all hover:opacity-100 hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 z-10">
+                        <X className="h-5 w-5 text-muted-foreground" />
                         <span className="sr-only">Close</span>
                     </DialogClose>
 
-                    <div className="flex flex-col md:flex-row gap-8 items-start">
+                    <div className="flex flex-col md:flex-row gap-6 items-start">
                         {/* Image */}
-                        <div className="w-20 h-20 shrink-0 flex items-center justify-center">
+                        <div className="w-24 h-24 shrink-0 flex items-center justify-center bg-muted/20 rounded-2xl border border-border/30 p-2">
                             <img
                                 src={item.image}
                                 alt={item.name}
@@ -135,37 +135,36 @@ export function AddToCartDialog({
 
                         {/* Details */}
                         <div className="flex-1 pt-2">
-                            {/* Visually hidden title for accessibility, but we render our own custom one */}
                             <DialogTitle className="sr-only">
                                 {item.name}
                             </DialogTitle>
 
-                            <h3 className="text-xl font-black text-gray-900 uppercase tracking-tight mb-3">
+                            <h3 className="text-xl font-black text-foreground uppercase tracking-tight mb-3">
                                 {item.name}
                             </h3>
-                            <div className="flex flex-row gap-4 text-gray-900">
-                                <div><span className='text-bold text-xl text-[#E85C24]'>SAR {dayPrice}</span> <span className="text-gray-500">/ day</span></div>
-                                <div><span className='text-bold text-xl text-[#E85C24]'>SAR {weekPrice}</span> <span className="text-gray-500">/ week</span></div>
-                                <div><span className='text-bold text-xl text-[#E85C24]'>SAR {fourWeekPrice}</span> <span className="text-gray-500">/ 4-week</span></div>
+                            <div className="flex flex-wrap gap-4 text-foreground">
+                                <div className="bg-primary/5 border border-primary/20 rounded-xl px-2 py-1"><span className='font-black text-sm md:text-base text-primary'>SAR {dayPrice}</span> <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">/ day</span></div>
+                                <div className="bg-primary/5 border border-primary/20 rounded-xl px-2 py-1"><span className='font-black text-sm md:text-base text-primary'>SAR {weekPrice}</span> <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">/ week</span></div>
+                                <div className="bg-primary/5 border border-primary/20 rounded-xl px-2 py-1"><span className='font-black text-sm md:text-base text-primary'>SAR {fourWeekPrice}</span> <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground ml-1">/ 4-week</span></div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="h-px bg-gray-200 w-full my-6" />
+                    <div className="h-px bg-border/50 w-full my-6" />
 
                     <div className="space-y-4">
                         {/* Location Input */}
                         <div className="space-y-2">
-                            <label className="text-base font-medium text-gray-800">
+                            <label className="text-sm font-bold uppercase tracking-widest text-muted-foreground">
                                 Where is your jobsite?
                             </label>
                             <LocationDialog onLocationSelect={handleInternalLocationChange}>
                                 <div className="relative group cursor-pointer">
-                                    <div className="flex items-center justify-between w-full rounded-md border border-gray-300 px-4 py-3 text-sm ring-offset-background bg-white">
-                                        <span className={cn("font-medium", isLocationSet ? "text-gray-900" : "text-gray-500")}>
+                                    <div className="flex items-center justify-between w-full rounded-xl border border-border/50 px-5 py-4 text-sm bg-muted/20 hover:bg-muted/40 transition-colors">
+                                        <span className={cn("font-medium", isLocationSet ? "text-foreground" : "text-muted-foreground")}>
                                             {isLocationSet ? effectiveLocation : "Select Location"}
                                         </span>
-                                        <span className="text-[#E85C24] font-bold whitespace-nowrap ml-4">
+                                        <span className="text-primary font-bold whitespace-nowrap ml-4">
                                             Change Location
                                         </span>
                                     </div>
@@ -175,8 +174,8 @@ export function AddToCartDialog({
 
                         {/* Date Inputs */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-base font-medium text-gray-800">Start date</label>
+                            <div className="space-y-3">
+                                <label className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Start date</label>
                                 <div
                                     className="relative cursor-pointer"
                                     onClick={() => startDateRef.current?.showPicker()}
@@ -185,10 +184,9 @@ export function AddToCartDialog({
                                         type="text"
                                         value={formatDate(startDate)}
                                         placeholder="-- / -- / --"
-                                        className="w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-center text-gray-500 focus:outline-none focus:border-[#E85C24] placeholder:text-gray-300 pointer-events-none"
+                                        className="w-full rounded-xl border border-border/50 px-5 py-4 text-sm text-center text-foreground font-medium bg-muted/20 hover:bg-muted/40 transition-colors focus:outline-none focus:border-primary placeholder:text-muted-foreground/50 pointer-events-none"
                                         readOnly
                                     />
-                                    {/* Native date input, hidden but functional via showPicker */}
                                     <input
                                         ref={startDateRef}
                                         type="date"
@@ -200,7 +198,7 @@ export function AddToCartDialog({
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-base font-medium text-gray-800">End date</label>
+                                <label className="text-base font-bold text-muted-foreground">End date</label>
                                 <div
                                     className="relative cursor-pointer"
                                     onClick={() => endDateRef.current?.showPicker()}
@@ -209,7 +207,7 @@ export function AddToCartDialog({
                                         type="text"
                                         value={formatDate(endDate)}
                                         placeholder="-- / -- / --"
-                                        className="w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-center text-gray-500 focus:outline-none focus:border-[#E85C24] placeholder:text-gray-300 pointer-events-none"
+                                        className="w-full rounded-md border border-border/50 px-5 py-4 text-sm text-center text-foreground font-medium bg-muted/20 hover:bg-muted/40 transition-colors focus:outline-none focus:border-primary placeholder:text-muted-foreground/50 pointer-events-none"
                                         readOnly
                                     />
                                     <input
@@ -227,29 +225,29 @@ export function AddToCartDialog({
                 </div>
 
                 {/* Footer Section */}
-                <div className="bg-[#EFEEEE] p-5 md:px-8 md:py-6 flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div className="w-full md:w-auto flex flex-col gap-2">
-                        <span className="text-base font-medium text-gray-800">Quantity</span>
-                        <div className="flex items-center bg-white border border-gray-300 rounded-md h-12 w-32 md:w-40">
+                <div className="bg-muted/30 border-t border-border/50 p-6 md:px-8 md:py-6 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="w-full md:w-auto flex flex-col gap-3">
+                        <span className="text-sm font-bold uppercase tracking-widest text-muted-foreground">Quantity</span>
+                        <div className="flex items-center bg-card border border-border/50 rounded-xl h-14 w-32 md:w-40 overflow-hidden shadow-sm">
                             <button
                                 onClick={() => handleQuantityChange(-1)}
-                                className="h-full px-4 text-gray-400 hover:text-[#E85C24] transition-colors flex items-center justify-center text-xl"
+                                className="h-full w-14 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-muted/50 transition-colors"
                                 type="button"
                             >
-                                -
+                                <Minus className="h-4 w-4" />
                             </button>
                             <input
                                 type="text"
                                 value={quantity}
-                                className="w-full h-full text-center font-bold text-gray-900 outline-none border-x border-gray-200 text-lg"
+                                className="w-full h-full text-center font-black text-lg bg-transparent text-foreground outline-none border-x border-border/50"
                                 readOnly
                             />
                             <button
                                 onClick={() => handleQuantityChange(1)}
-                                className="h-full px-4 text-gray-400 hover:text-[#E85C24] transition-colors flex items-center justify-center text-xl"
+                                className="h-full w-14 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-muted/50 transition-colors"
                                 type="button"
                             >
-                                +
+                                <Plus className="h-4 w-4" />
                             </button>
                         </div>
                     </div>
@@ -257,7 +255,7 @@ export function AddToCartDialog({
                     <div className="w-full mt-7 flex justify-end">
                         <Button
                             type="button"
-                            className="w-full md:w-auto min-w-[200px] h-11 bg-[#E85C24] hover:bg-[#d64e18] text-white font-bold tracking-wide rounded text-base uppercase shadow-sm"
+                            className="w-full md:w-auto min-w-[200px] h-14 bg-primary hover:bg-primary/90 text-white font-bold tracking-widest rounded-xl text-sm uppercase shadow-md shadow-primary/20 transition-all hover:-translate-y-0.5"
                             size="lg"
                             onClick={(e) => {
                                 e.preventDefault();

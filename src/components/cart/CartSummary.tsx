@@ -12,42 +12,42 @@ interface CartSummaryProps {
 
 export function CartSummary({ breakdown }: CartSummaryProps) {
     return (
-        <div className="bg-gray-50 rounded-lg p-6 sticky top-24">
-            <div className="mb-6">
-                <span className="text-sm font-bold text-gray-600 block mb-1">Estimated Total</span>
-                <span className="text-3xl md:text-4xl font-black text-gray-900 block">
+        <div className="bg-card border border-border/50 rounded-3xl p-6 md:p-8 sticky top-32 shadow-sm">
+            <div className="mb-8">
+                <span className="text-[11px] font-black uppercase tracking-widest text-muted-foreground block mb-1">Estimated Total</span>
+                <span className="text-4xl md:text-5xl font-black text-foreground block tracking-tight">
                     SAR {breakdown.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </span>
             </div>
 
-            <div className="space-y-3 mb-8 border-b border-gray-200 pb-8">
+            <div className="space-y-4 mb-8 border-b border-border/50 pb-8">
                 <div className="flex justify-between items-center text-sm">
-                    <span className="text-gray-600 font-medium">Rental Charges</span>
-                    <span className="font-bold text-gray-900">
+                    <span className="text-muted-foreground font-semibold">Rental Charges</span>
+                    <span className="font-bold text-foreground">
                         SAR {breakdown.rentalCharges.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                 </div>
 
                 <div className="flex justify-between items-center text-sm">
-                    <div className="flex items-center gap-1.5">
-                        <span className="text-gray-600 font-medium">Rental Protection Plan</span>
+                    <div className="flex items-center gap-1.5 group">
+                        <span className="text-muted-foreground font-semibold">Rental Protection Plan</span>
                         <span title="Covers accidental damage to equipment" className="cursor-help">
-                            <Info className="h-4 w-4 text-gray-400" />
+                            <Info className="h-4 w-4 text-muted-foreground/50 group-hover:text-primary transition-colors" />
                         </span>
                     </div>
-                    <span className="font-bold text-gray-900">
+                    <span className="font-bold text-foreground">
                         SAR {breakdown.protectionPlan.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                 </div>
 
                 <div className="flex justify-between items-center text-sm">
-                    <div className="flex items-center gap-1.5">
-                        <span className="text-gray-600 font-medium">Estimated Transportation Fee</span>
+                    <div className="flex items-center gap-1.5 group">
+                        <span className="text-muted-foreground font-semibold">Transportation Fee</span>
                         <span title="Based on delivery location" className="cursor-help">
-                            <Info className="h-4 w-4 text-gray-400" />
+                            <Info className="h-4 w-4 text-muted-foreground/50 group-hover:text-primary transition-colors" />
                         </span>
                     </div>
-                    <span className="font-bold text-gray-900">
+                    <span className="font-bold text-foreground">
                         {breakdown.transportationFee > 0
                             ? `SAR ${breakdown.transportationFee.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                             : "SAR -"}
@@ -55,32 +55,32 @@ export function CartSummary({ breakdown }: CartSummaryProps) {
                 </div>
 
                 <div className="flex justify-between items-center text-sm">
-                    <div className="flex items-center gap-1.5">
-                        <span className="text-gray-600 font-medium">Equipment Charges</span>
+                    <div className="flex items-center gap-1.5 group">
+                        <span className="text-muted-foreground font-semibold">Equipment Charges</span>
                         <span title="Environmental and other fees" className="cursor-help">
-                            <Info className="h-4 w-4 text-gray-400" />
+                            <Info className="h-4 w-4 text-muted-foreground/50 group-hover:text-primary transition-colors" />
                         </span>
                     </div>
-                    <span className="font-bold text-gray-900">
+                    <span className="font-bold text-foreground">
                         SAR {breakdown.equipmentCharges.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                 </div>
 
-                <div className="flex justify-between items-center text-sm pt-2">
-                    <span className="text-gray-600 font-medium">Taxes</span>
-                    <span className="font-bold text-gray-900">
+                <div className="flex justify-between items-center text-sm pt-4 border-t border-border/30 border-dashed">
+                    <span className="text-muted-foreground font-semibold">Taxes</span>
+                    <span className="font-bold text-foreground">
                         SAR {breakdown.taxes.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                 </div>
             </div>
 
-            <div className="space-y-4">
-                <Button className="w-full h-12 bg-[#E85C24] hover:bg-[#d64e18] text-white font-bold uppercase tracking-wider text-sm rounded-sm shadow-sm">
+            <div className="space-y-5">
+                <Button className="w-full h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest text-sm rounded-xl shadow-md shadow-primary/20 hover:-translate-y-0.5 transition-all">
                     CHECKOUT AS GUEST
                 </Button>
 
-                <div className="text-center text-sm text-gray-600 font-medium">
-                    New to EquipmentRent? <Link href="#" className="text-[#E85C24] hover:underline">Create account</Link>
+                <div className="text-center text-sm text-muted-foreground font-medium bg-muted/30 py-3 rounded-xl border border-border/50">
+                    New to EquipmentRent? <Link href="#" className="text-primary hover:text-primary/80 font-bold ml-1 transition-colors">Create account</Link>
                 </div>
             </div>
         </div>
