@@ -55,7 +55,7 @@ const accountLinks = [
 
 export function AccountDashboard() {
     return (
-        <div className="container mx-auto px-4 lg:px-6">
+        <div className="w-full px-4 lg:px-6">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 bg-card border border-border/50 rounded-3xl p-6 shadow-sm">
                 <div>
