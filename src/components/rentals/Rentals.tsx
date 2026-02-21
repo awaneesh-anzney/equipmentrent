@@ -40,7 +40,7 @@ export function Rentals() {
                 </div>
 
                 {/* Tab section */}
-                <div className="w-full mt-8">
+                <div className="w-full ">
                     <div className="flex border-b border-gray-200 w-full">
                         <button className="relative px-6 py-4 text-sm font-bold text-gray-900 uppercase tracking-wide">
                             ACTIVE
