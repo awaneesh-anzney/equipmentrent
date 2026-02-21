@@ -21,21 +21,21 @@ export function CategorySidebar() {
     };
 
     return (
-        <div className="w-full">
-            <h3 className="text-lg font-bold text-gray-900 mb-6">Browse By Category</h3>
-            <ul className="space-y-1">
+        <div className="w-full bg-card rounded-2xl border border-border p-6 shadow-sm hidden lg:block sticky top-28 h-fit">
+            <h3 className="text-lg font-black text-foreground mb-6 uppercase tracking-tight">Browse Category</h3>
+            <ul className="space-y-2">
                 {RENT_CATEGORIES_DATA.map((category) => {
                     const isOpen = openCategories.includes(category.slug);
                     const isActive = pathname.includes(category.slug);
 
                     return (
-                        <li key={category.id}>
+                        <li key={category.id} className="border-b border-border/50 last:border-0 pb-1">
                             <div className="flex items-center justify-between py-2 group">
                                 <button
                                     onClick={() => toggleCategory(category.slug)}
                                     className={cn(
-                                        "flex-1 text-left text-sm font-medium transition-colors hover:text-primary",
-                                        isActive ? "text-primary font-bold" : "text-gray-600"
+                                        "flex-1 text-left text-sm font-semibold transition-colors hover:text-primary",
+                                        isActive ? "text-primary tracking-wide text-base" : "text-muted-foreground"
                                     )}
                                 >
                                     {category.title}
@@ -43,12 +43,12 @@ export function CategorySidebar() {
                                 {category.subcategories && category.subcategories.length > 0 && (
                                     <button
                                         onClick={() => toggleCategory(category.slug)}
-                                        className="p-1 text-primary hover:bg-gray-50 rounded"
+                                        className="p-1.5 text-muted-foreground group-hover:text-primary hover:bg-primary/10 rounded-full transition-all"
                                     >
                                         <ChevronDown
                                             className={cn(
-                                                "h-4 w-4 transition-transform duration-200",
-                                                isOpen ? "rotate-180" : ""
+                                                "h-4 w-4 transition-transform duration-300",
+                                                isOpen ? "rotate-180 text-primary" : ""
                                             )}
                                         />
                                     </button>
@@ -57,12 +57,12 @@ export function CategorySidebar() {
 
                             {/* Subcategories */}
                             {isOpen && category.subcategories && (
-                                <ul className="pl-4 space-y-1 pb-2 border-l border-gray-100 ml-1">
+                                <ul className="pl-4 mt-2 space-y-2 pb-3 border-l-2 border-primary/20 ml-1.5 animate-in fade-in slide-in-from-left-2 duration-300">
                                     {category.subcategories.map((sub, idx) => (
                                         <li key={idx}>
                                             <Link
                                                 href={`/rent/categories/${sub.slug}`}
-                                                className="block py-1.5 text-xs text-gray-500 hover:text-primary transition-colors"
+                                                className="block py-1 text-sm text-muted-foreground hover:text-primary transition-all hover:translate-x-1"
                                             >
                                                 {sub.title}
                                             </Link>
