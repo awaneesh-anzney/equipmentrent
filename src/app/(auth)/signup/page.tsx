@@ -1,9 +1,12 @@
-import React from 'react'
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+import SignUp from '@/components/auth/SignUp'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Sign Up - EquipmentRent',
+  description: 'Create a new account',
 }
 
-export default page
+export default function SignUpPage() {
+  return <SignUp />
+}
