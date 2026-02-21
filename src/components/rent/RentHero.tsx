@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { MapPin, ChevronRight } from "lucide-react";
+import { MapPin, ChevronRight, ChevronDown } from "lucide-react";
 import { LocationDialog } from "@/components/commons/LocationDialog";
 
 interface RentHeroProps {
@@ -20,9 +20,15 @@ export function RentHero({ selectedLocation, onLocationChange }: RentHeroProps) 
             <div className="bg-background/80 backdrop-blur-md border-b border-border/50 py-2 px-6 relative z-10 transition-colors">
                 <div className="flex flex-col md:flex-row justify-between items-center text-sm gap-4 md:gap-0">
                     <LocationDialog onLocationSelect={onLocationChange}>
-                        <div className="flex items-center gap-2 cursor-pointer hover:bg-primary/10 bg-primary/5 px-4 py-2 rounded-full border border-primary/20 transition-all text-primary font-semibold">
-                            <MapPin className="h-4 w-4" />
-                            <span>{selectedLocation}</span>
+                        <div className="flex items-center gap-3 cursor-pointer group bg-card hover:bg-muted/50 border border-border/80 hover:border-primary/40 px-5 py-2 rounded-2xl shadow-sm transition-all text-foreground font-semibold">
+                            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                                <MapPin className="h-4 w-4 text-primary" />
+                            </div>
+                            <div className="flex flex-col text-left">
+                                <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold leading-none mb-1">Your Location</span>
+                                <span className="text-sm leading-none group-hover:text-primary transition-colors">{selectedLocation}</span>
+                            </div>
+                            <ChevronDown className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors ml-4" />
                         </div>
                     </LocationDialog>
 
@@ -38,21 +44,21 @@ export function RentHero({ selectedLocation, onLocationChange }: RentHeroProps) 
             <div className="py-2 px-6 relative z-10">
                 <div className="items-start gap-12">
                     <div className="flex flex-row gap-6">
-                       <div>
-                        <h4 className="inline-block border border-primary/20 bg-primary/5 rounded-full px-4 py-1.5 mb-6 text-xs font-bold uppercase tracking-widest text-primary">
-                            Heavy Machinery & Tools
-                        </h4>
-                        <h3 className="text-4xl font-black text-foreground mb-4 tracking-tighter leading-none">
-                            Equipment <br className="hidden md:block" /> Rentals
-                        </h3>
-                       </div>
-                       <div className="w-full lg:w-3/4 px-10">
-                        <p className="text-muted-foreground text-lg md:text-xl font-medium leading-relaxed">
-                            Power your mega projects with our industry-leading heavy equipment and tooling solutions.
-                            From earthmovers to climate control, get exactly what you need delivered anywhere in the Kingdom.
-                            We operate across <a href="#" className="text-primary font-bold underline decoration-primary/30 underline-offset-4 hover:decoration-primary transition-colors">Strategic Hubs</a> nationwide.
-                        </p>
-                       </div>
+                        <div>
+                            <h4 className="inline-block border border-primary/20 bg-primary/5 rounded-full px-4 py-1.5 mb-6 text-xs font-bold uppercase tracking-widest text-primary">
+                                Heavy Machinery & Tools
+                            </h4>
+                            <h3 className="text-4xl font-black text-foreground mb-4 tracking-tighter leading-none">
+                                Equipment <br className="hidden md:block" /> Rentals
+                            </h3>
+                        </div>
+                        <div className="w-full lg:w-3/4 px-10">
+                            <p className="text-muted-foreground text-lg md:text-xl font-medium leading-relaxed">
+                                Power your mega projects with our industry-leading heavy equipment and tooling solutions.
+                                From earthmovers to climate control, get exactly what you need delivered anywhere in the Kingdom.
+                                We operate across <a href="#" className="text-primary font-bold underline decoration-primary/30 underline-offset-4 hover:decoration-primary transition-colors">Strategic Hubs</a> nationwide.
+                            </p>
+                        </div>
                     </div>
 
                 </div>
