@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Equipment Rent",
-  description: "Equipment Rental Platform",
+  title: "EquipRent | Equipment Rental in Saudi Arabia",
+  description: "The leading equipment rental platform powering Saudi Arabia's Vision 2030 and mega projects.",
   icons: {
     icon: "/icon.svg",
   },
