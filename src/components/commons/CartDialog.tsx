@@ -45,9 +45,9 @@ export function CartDialog() {
                 </div>
 
                 {/* Items List */}
-                <div className="h-[340px] overflow-y-auto overflow-x-hidden custom-scrollbar">
+                <div className="max-h-[200px] overflow-y-auto overflow-x-hidden custom-scrollbar">
                     {cartItems.length === 0 ? (
-                        <div className="h-full flex flex-col items-center justify-center p-8 text-center">
+                        <div className="flex flex-col items-center justify-center p-8  text-center">
                             <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mb-4">
                                 <ShoppingCart className="h-8 w-8 text-muted-foreground/50" />
                             </div>
