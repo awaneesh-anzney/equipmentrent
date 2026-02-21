@@ -55,18 +55,21 @@ const accountLinks = [
 
 export function AccountDashboard() {
     return (
-        <div className="container max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 lg:px-6">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10">
-                <h1 className="text-4xl font-extrabold tracking-tight text-foreground">
-                    Your Rental Account
-                </h1>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 bg-card border border-border/50 rounded-3xl p-6 shadow-sm">
+                <div>
+                    <h1 className="text-xl md:text-2xl font-black tracking-tight text-foreground uppercase mb-2">
+                        Your Account
+                    </h1>
+                    <p className="text-muted-foreground font-medium text-lg">Manage your rentals, history, and profile.</p>
+                </div>
 
-                <div className="flex items-center gap-3">
-                    <Button variant="outline" className="font-semibold uppercase tracking-wider text-xs px-6 py-5 border-2 hover:bg-muted">
+                <div className="flex flex-wrap items-center gap-4">
+                    <Button variant="outline" className="font-bold uppercase tracking-widest text-xs px-6 h-14 rounded-xl border-border/50 hover:bg-muted">
                         Request Service
                     </Button>
-                    <Button className="font-semibold uppercase tracking-wider text-xs px-8 py-5 bg-orange-600 hover:bg-orange-700 text-white shadow-md">
+                    <Button className="font-bold uppercase tracking-widest text-xs px-8 h-14 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground shadow-md shadow-primary/20 hover:-translate-y-0.5 transition-all">
                         Rent Now
                     </Button>
                 </div>
