@@ -6,8 +6,10 @@ import { Search, User, Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 import { CartDialog } from "@/components/commons/CartDialog";
+import { UserDialog } from "@/components/commons/UserDialog";
 
 interface NavbarProps {
     theme?: "light" | "dark";
@@ -16,6 +18,7 @@ interface NavbarProps {
 const Navbar = ({ theme = "dark" }: NavbarProps) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { user } = useAuth();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -86,17 +89,9 @@ const Navbar = ({ theme = "dark" }: NavbarProps) => {
                     </div>
 
                     <div className="flex items-center gap-2 border-l border-border/50 pl-4">
-                        <Link href="/account">
-                            <Button size="icon" variant="ghost" className="rounded-full text-muted-foreground hover:text-primary hover:bg-primary/10">
-                                <User className="h-5 w-5" />
-                            </Button>
-                        </Link>
+                        <UserDialog />
 
                         <CartDialog />
-
-                        <Button className="ml-2 rounded-full font-semibold shadow-[0_2px_10px_0_rgba(var(--primary),0.2)] hover:shadow-[0_4px_14px_rgba(var(--primary),0.3)] transition-all">
-                            Call 1.888.RENTS <ArrowRight className="w-4 h-4 ml-1" />
-                        </Button>
                     </div>
                 </div>
 
@@ -134,9 +129,6 @@ const Navbar = ({ theme = "dark" }: NavbarProps) => {
                                 className="pl-9 bg-muted h-12 rounded-xl border-transparent"
                             />
                         </div>
-                        <Button className="w-full h-12 rounded-xl font-bold shadow-md">
-                            Call 1.888.RENTS
-                        </Button>
                     </div>
                 </div>
             )}
