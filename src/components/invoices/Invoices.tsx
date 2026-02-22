@@ -25,41 +25,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-// Mock Data
-const INVOICES = [
-    {
-        id: "INV-2026-001",
-        date: "Feb 15, 2026",
-        dueDate: "Mar 15, 2026",
-        amount: "$1,250.00",
-        status: "Paid",
-        project: "Downtown Excavation",
-    },
-    {
-        id: "INV-2026-002",
-        date: "Feb 18, 2026",
-        dueDate: "Mar 18, 2026",
-        amount: "$3,400.00",
-        status: "Pending",
-        project: "Bridge Repair Site B",
-    },
-    {
-        id: "INV-2026-003",
-        date: "Jan 10, 2026",
-        dueDate: "Feb 10, 2026",
-        amount: "$850.00",
-        status: "Overdue",
-        project: "Highway Expansion",
-    },
-    {
-        id: "INV-2026-004",
-        date: "Jan 05, 2026",
-        dueDate: "Feb 05, 2026",
-        amount: "$2,100.00",
-        status: "Paid",
-        project: "Residential Complex A",
-    },
-];
+import { INVOICES_DATA } from "@/data/invoices";
 
 export default function Invoices() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -78,7 +44,7 @@ export default function Invoices() {
     };
 
     const filterInvoices = (statusFilter: string) => {
-        return INVOICES.filter(inv => {
+        return INVOICES_DATA.filter(inv => {
             const matchesSearch = inv.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 inv.project.toLowerCase().includes(searchTerm.toLowerCase());
             const matchesStatus = statusFilter === "All" || inv.status === statusFilter;
@@ -116,7 +82,7 @@ export default function Invoices() {
                 <Card className="rounded-3xl border-border/50 shadow-sm bg-card/50 backdrop-blur-sm overflow-hidden group">
                     <CardContent className="p-6">
                         <p className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-1">Total Outstanding</p>
-                        <h2 className="text-3xl font-black tracking-tight text-foreground">$4,250.00</h2>
+                        <h2 className="text-3xl font-black tracking-tight text-foreground">SAR 21,500</h2>
                         <div className="mt-4 flex items-center text-sm font-medium text-amber-500">
                             <span>2 Invoices Pending</span>
                         </div>
@@ -125,7 +91,7 @@ export default function Invoices() {
                 <Card className="rounded-3xl border-border/50 shadow-sm bg-card/50 backdrop-blur-sm overflow-hidden group">
                     <CardContent className="p-6">
                         <p className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-1">Overdue Amount</p>
-                        <h2 className="text-3xl font-black tracking-tight text-red-500">$850.00</h2>
+                        <h2 className="text-3xl font-black tracking-tight text-red-500">SAR 4,800</h2>
                         <div className="mt-4 flex items-center text-sm font-medium text-red-500/80">
                             <span>1 Invoice Past Due</span>
                         </div>
@@ -134,7 +100,7 @@ export default function Invoices() {
                 <Card className="rounded-3xl border-border/50 shadow-sm bg-card/50 backdrop-blur-sm overflow-hidden group">
                     <CardContent className="p-6">
                         <p className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-1">Last Payment</p>
-                        <h2 className="text-3xl font-black tracking-tight text-foreground">$1,250.00</h2>
+                        <h2 className="text-3xl font-black tracking-tight text-foreground">SAR 15,000</h2>
                         <div className="mt-4 flex items-center text-sm font-medium text-emerald-500">
                             <span>Received on Feb 16, 2026</span>
                         </div>

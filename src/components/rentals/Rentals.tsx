@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Loader2 } from "lucide-react";
+import { ChevronDown, Loader2, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
     Table,
@@ -10,6 +10,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { RENTALS_DATA } from "@/data/rentals";
 
 export function Rentals() {
     const [isLoading, setIsLoading] = useState(true);
@@ -17,10 +19,8 @@ export function Rentals() {
     // We can simulate an API call or loading state.
     useEffect(() => {
         const timer = setTimeout(() => {
-            // Keep loading to match the image or set to false to show the empty state after a while
-            // For demonstration of the UI from the image, we will let it spin for 5 seconds
             setIsLoading(false);
-        }, 5000);
+        }, 1500);
         return () => clearTimeout(timer);
     }, []);
 
@@ -85,6 +85,23 @@ export function Rentals() {
                                             </div>
                                         </TableCell>
                                     </TableRow>
+                                ) : RENTALS_DATA.length > 0 ? (
+                                    RENTALS_DATA.map((rental) => (
+                                        <TableRow key={rental.id} className="hover:bg-muted/30 border-border/50 transition-colors group">
+                                            <TableCell className="py-4 px-6 font-bold whitespace-nowrap text-foreground">{rental.equipment}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm text-muted-foreground whitespace-nowrap">{rental.startDate}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm text-muted-foreground whitespace-nowrap">{rental.endDate}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm font-medium whitespace-nowrap">{rental.jobsite}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm text-primary font-bold whitespace-nowrap">{rental.id}</TableCell>
+                                            <TableCell className="py-4 px-6 whitespace-nowrap">
+                                                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg hover:bg-primary/10 hover:text-primary" title="Details">
+                                                        <ArrowRight className="w-4 h-4" />
+                                                    </Button>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
                                 ) : (
                                     <TableRow className="border-none hover:bg-transparent">
                                         <TableCell colSpan={6} className="py-16 text-center text-muted-foreground font-medium h-[200px] text-lg">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
+import { Loader2, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
     Table,
@@ -10,6 +10,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ORDERS_DATA } from "@/data/orders";
 
 export function Orders() {
     const [isLoading, setIsLoading] = useState(true);
@@ -17,12 +20,21 @@ export function Orders() {
     // We can simulate an API call or loading state.
     useEffect(() => {
         const timer = setTimeout(() => {
-            // Keep loading to match the image or set to false to show the empty state after a while
-            // For demonstration of the UI from the image, we will let it spin for 5 seconds
             setIsLoading(false);
-        }, 5000);
+        }, 1500);
         return () => clearTimeout(timer);
     }, []);
+
+    const getStatusBadge = (status: string) => {
+        switch (status) {
+            case "Completed":
+                return <Badge className="bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 border-emerald-500/20">{status}</Badge>;
+            case "Active":
+                return <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-primary/20">{status}</Badge>;
+            default:
+                return <Badge variant="outline">{status}</Badge>;
+        }
+    };
 
     return (
         <div className="w-full px-4 lg:px-6">
@@ -59,7 +71,7 @@ export function Orders() {
                                     <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[25%] uppercase whitespace-nowrap">
                                         Equipment
                                     </TableHead>
-                                    <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[15%] uppercase whitespace-nowrap">
+                                    <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[10%] uppercase whitespace-nowrap text-center">
                                         Quantity
                                     </TableHead>
                                     <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[20%] uppercase whitespace-nowrap">
@@ -71,20 +83,46 @@ export function Orders() {
                                     <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[10%] uppercase whitespace-nowrap">
                                         Status
                                     </TableHead>
+                                    <TableHead className="py-5 px-6 align-middle text-right font-bold text-xs text-muted-foreground tracking-widest w-[5%] uppercase whitespace-nowrap">
+                                        Actions
+                                    </TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {isLoading ? (
                                     <TableRow className="border-none hover:bg-transparent">
-                                        <TableCell colSpan={6} className="h-[300px] text-center">
+                                        <TableCell colSpan={7} className="h-[300px] text-center">
                                             <div className="flex w-full items-center justify-center">
                                                 <Loader2 className="h-10 w-10 animate-spin text-primary" />
                                             </div>
                                         </TableCell>
                                     </TableRow>
+                                ) : ORDERS_DATA.length > 0 ? (
+                                    ORDERS_DATA.map((order) => (
+                                        <TableRow key={order.id} className="hover:bg-muted/30 border-border/50 transition-colors group">
+                                            <TableCell className="py-4 px-6 text-sm text-muted-foreground whitespace-nowrap">
+                                                <div>{order.orderPlaced}</div>
+                                                <div className="text-xs font-bold text-foreground mt-1">{order.id}</div>
+                                            </TableCell>
+                                            <TableCell className="py-4 px-6 font-bold whitespace-nowrap text-foreground">{order.equipment}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm font-medium whitespace-nowrap text-center">{order.quantity}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm text-muted-foreground whitespace-nowrap">{order.dateRange}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm text-foreground whitespace-nowrap">{order.jobsite}</TableCell>
+                                            <TableCell className="py-4 px-6 whitespace-nowrap">
+                                                {getStatusBadge(order.status)}
+                                            </TableCell>
+                                            <TableCell className="py-4 px-6 text-right whitespace-nowrap">
+                                                <div className="opacity-0 group-hover:opacity-100 transition-opacity flex justify-end">
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg hover:bg-primary/10 hover:text-primary" title="Details">
+                                                        <ArrowRight className="w-4 h-4" />
+                                                    </Button>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
                                 ) : (
                                     <TableRow className="border-none hover:bg-transparent">
-                                        <TableCell colSpan={6} className="py-16 text-center text-muted-foreground font-medium h-[200px] text-lg">
+                                        <TableCell colSpan={7} className="py-16 text-center text-muted-foreground font-medium h-[200px] text-lg">
                                             No orders found.
                                         </TableCell>
                                     </TableRow>
