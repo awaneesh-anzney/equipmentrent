@@ -1,9 +1,10 @@
+"use client";
 import React from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { LocationProvider } from "@/contexts/LocationContext";
 
-export default function InfinitoLayout({
+export default function RentLayout({
     children,
 }: {
     children: React.ReactNode;
