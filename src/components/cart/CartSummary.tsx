@@ -5,12 +5,15 @@ import { Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PricingBreakdown } from "@/lib/pricing-utils";
 import Link from "next/link";
+import { useAuth } from "@/hooks/useAuth";
 
 interface CartSummaryProps {
     breakdown: PricingBreakdown;
 }
 
 export function CartSummary({ breakdown }: CartSummaryProps) {
+    const { user } = useAuth();
+
     return (
         <div className="bg-card border border-border/50 rounded-3xl p-6 md:p-8 sticky top-32 shadow-sm">
             <div className="mb-8">
@@ -75,13 +78,26 @@ export function CartSummary({ breakdown }: CartSummaryProps) {
             </div>
 
             <div className="space-y-5">
-                <Button className="w-full h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest text-sm rounded-xl shadow-md shadow-primary/20 hover:-translate-y-0.5 transition-all">
-                    CHECKOUT AS GUEST
+                <Button
+                    disabled={!user}
+                    className="w-full h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest text-sm rounded-xl shadow-md shadow-primary/20 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:translate-y-0 disabled:cursor-not-allowed"
+                >
+                    CHECKOUT
                 </Button>
 
-                <div className="text-center text-sm text-muted-foreground font-medium bg-muted/30 py-3 rounded-xl border border-border/50">
-                    New to EquipmentRent? <Link href="#" className="text-primary hover:text-primary/80 font-bold ml-1 transition-colors">Create account</Link>
-                </div>
+                {!user && (
+                    <div className="text-center text-sm text-muted-foreground font-medium bg-muted/30 py-4 px-2 rounded-xl border border-border/50 flex flex-col gap-3">
+                        <div>
+                            Already have an account?
+                            <Link href="/login" className="text-primary hover:text-primary/80 font-bold ml-1 transition-colors underline-offset-4 hover:underline">Sign In</Link>
+                        </div>
+                        <div className="w-full h-px bg-border/50" />
+                        <div>
+                            New to EquipmentRent?
+                            <Link href="/signup" className="text-primary hover:text-primary/80 font-bold ml-1 transition-colors underline-offset-4 hover:underline">Create account</Link>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
