@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import { useCart } from "@/contexts/CartContext";
 import { CartItemCard } from "@/components/cart/CartItemCard";
 import { CartSummary } from "@/components/cart/CartSummary";
@@ -10,6 +11,7 @@ import { calculateCartBreakdown } from "@/lib/pricing-utils";
 
 export default function CartPage() {
     const { cartItems } = useCart();
+    const { user } = useAuth();
     const breakdown = calculateCartBreakdown(cartItems);
 
     return (
@@ -32,17 +34,19 @@ export default function CartPage() {
                 </div>
 
                 {/* Account Banner */}
-                <div className="bg-card border border-border/50 shadow-sm rounded-2xl p-6 mb-12 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
-                    <div className="flex items-center gap-2 text-sm md:text-base font-semibold text-muted-foreground">
-                        Already have an account?
-                        <Link href="#" className="text-primary hover:text-primary/80 transition-colors font-bold underline underline-offset-4 decoration-primary/30 hover:decoration-primary">Sign in</Link>
+                {!user && (
+                    <div className="bg-card border border-border/50 shadow-sm rounded-2xl p-6 mb-12 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-0">
+                        <div className="flex items-center gap-2 text-sm md:text-base font-semibold text-muted-foreground">
+                            Already have an account?
+                            <Link href="/login" className="text-primary hover:text-primary/80 transition-colors font-bold underline underline-offset-4 decoration-primary/30 hover:decoration-primary">Sign in</Link>
+                        </div>
+                        <div className="hidden md:block w-px h-8 bg-border/50 mx-4" />
+                        <div className="flex items-center gap-2 text-sm md:text-base font-semibold text-muted-foreground">
+                            New to EquipmentRent?
+                            <Link href="/signup" className="text-primary hover:text-primary/80 transition-colors font-bold underline underline-offset-4 decoration-primary/30 hover:decoration-primary">Create account</Link>
+                        </div>
                     </div>
-                    <div className="hidden md:block w-px h-8 bg-border/50 mx-4" />
-                    <div className="flex items-center gap-2 text-sm md:text-base font-semibold text-muted-foreground">
-                        New to EquipmentRent?
-                        <Link href="#" className="text-primary hover:text-primary/80 transition-colors font-bold underline underline-offset-4 decoration-primary/30 hover:decoration-primary">Create account</Link>
-                    </div>
-                </div>
+                )}
 
                 {cartItems.length > 0 ? (
                     <div className="flex flex-col lg:flex-row gap-12 items-start">
