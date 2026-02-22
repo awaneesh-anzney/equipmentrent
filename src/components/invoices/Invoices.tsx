@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { KpiCard } from "@/components/invoices/KpiCard";
+
 import { INVOICES_DATA } from "@/data/invoices";
 
 export default function Invoices() {
@@ -51,6 +53,19 @@ export default function Invoices() {
             return matchesSearch && matchesStatus;
         });
     };
+
+    const formatCurrency = (amount: number) => `SAR ${amount.toLocaleString()}`;
+
+    // Compute dynamic KPI values
+    const totalOutstanding = INVOICES_DATA.filter(inv => inv.status !== "Paid").reduce((acc, curr) => acc + curr.amount, 0);
+    const pendingCount = INVOICES_DATA.filter(inv => inv.status === "Pending").length;
+
+    const overdueAmount = INVOICES_DATA.filter(inv => inv.status === "Overdue").reduce((acc, curr) => acc + curr.amount, 0);
+    const overdueCount = INVOICES_DATA.filter(inv => inv.status === "Overdue").length;
+
+    const paidInvoices = INVOICES_DATA.filter(inv => inv.status === "Paid");
+    const lastPaymentAmount = paidInvoices.length > 0 ? paidInvoices[0].amount : 0;
+    const lastPaymentDate = paidInvoices.length > 0 ? paidInvoices[0].date : "N/A";
 
     return (
         <div className="w-full p-2">
@@ -79,33 +94,25 @@ export default function Invoices() {
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <Card className="rounded-3xl border-border/50 shadow-sm bg-card/50 backdrop-blur-sm overflow-hidden group">
-                    <CardContent className="p-6">
-                        <p className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-1">Total Outstanding</p>
-                        <h2 className="text-3xl font-black tracking-tight text-foreground">SAR 21,500</h2>
-                        <div className="mt-4 flex items-center text-sm font-medium text-amber-500">
-                            <span>2 Invoices Pending</span>
-                        </div>
-                    </CardContent>
-                </Card>
-                <Card className="rounded-3xl border-border/50 shadow-sm bg-card/50 backdrop-blur-sm overflow-hidden group">
-                    <CardContent className="p-6">
-                        <p className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-1">Overdue Amount</p>
-                        <h2 className="text-3xl font-black tracking-tight text-red-500">SAR 4,800</h2>
-                        <div className="mt-4 flex items-center text-sm font-medium text-red-500/80">
-                            <span>1 Invoice Past Due</span>
-                        </div>
-                    </CardContent>
-                </Card>
-                <Card className="rounded-3xl border-border/50 shadow-sm bg-card/50 backdrop-blur-sm overflow-hidden group">
-                    <CardContent className="p-6">
-                        <p className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-1">Last Payment</p>
-                        <h2 className="text-3xl font-black tracking-tight text-foreground">SAR 15,000</h2>
-                        <div className="mt-4 flex items-center text-sm font-medium text-emerald-500">
-                            <span>Received on Feb 16, 2026</span>
-                        </div>
-                    </CardContent>
-                </Card>
+                <KpiCard
+                    title="Total Outstanding"
+                    value={formatCurrency(totalOutstanding)}
+                    description={`${pendingCount} Invoices Pending`}
+                    descriptionClassName="text-amber-500"
+                />
+                <KpiCard
+                    title="Overdue Amount"
+                    value={formatCurrency(overdueAmount)}
+                    valueClassName="text-red-500"
+                    description={`${overdueCount} Invoice${overdueCount !== 1 ? 's' : ''} Past Due`}
+                    descriptionClassName="text-red-500/80"
+                />
+                <KpiCard
+                    title="Last Payment"
+                    value={formatCurrency(lastPaymentAmount)}
+                    description={`Received on ${lastPaymentDate}`}
+                    descriptionClassName="text-emerald-500"
+                />
             </div>
 
             {/* Invoices List Section */}
@@ -154,7 +161,7 @@ export default function Invoices() {
                                                 <TableCell className="py-4 px-6 font-medium text-muted-foreground whitespace-nowrap">{invoice.project}</TableCell>
                                                 <TableCell className="py-4 px-6 text-sm whitespace-nowrap">{invoice.date}</TableCell>
                                                 <TableCell className="py-4 px-6 text-sm whitespace-nowrap">{invoice.dueDate}</TableCell>
-                                                <TableCell className="py-4 px-6 font-bold whitespace-nowrap">{invoice.amount}</TableCell>
+                                                <TableCell className="py-4 px-6 font-bold whitespace-nowrap">{formatCurrency(invoice.amount)}</TableCell>
                                                 <TableCell className="py-4 px-6 whitespace-nowrap">
                                                     {getStatusBadge(invoice.status)}
                                                 </TableCell>
