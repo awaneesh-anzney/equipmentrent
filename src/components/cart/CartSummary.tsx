@@ -7,12 +7,15 @@ import { PricingBreakdown } from "@/lib/pricing-utils";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
 
+import { useRouter } from "next/navigation";
+
 interface CartSummaryProps {
     breakdown: PricingBreakdown;
 }
 
 export function CartSummary({ breakdown }: CartSummaryProps) {
     const { user } = useAuth();
+    const router = useRouter();
 
     return (
         <div className="bg-card border border-border/50 rounded-3xl p-6 md:p-8 sticky top-32 shadow-sm">
@@ -80,6 +83,7 @@ export function CartSummary({ breakdown }: CartSummaryProps) {
             <div className="space-y-5">
                 <Button
                     disabled={!user}
+                    onClick={() => router.push("/rent/checkout")}
                     className="w-full h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest text-sm rounded-xl shadow-md shadow-primary/20 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:translate-y-0 disabled:cursor-not-allowed"
                 >
                     CHECKOUT

@@ -6,6 +6,7 @@ import { toast } from "sonner"; // If sonner isn't set up, it won't break unless
 
 interface User {
     email: string;
+    name?: string;
 }
 
 interface AuthContextType {
