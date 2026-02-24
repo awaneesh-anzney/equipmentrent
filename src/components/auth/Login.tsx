@@ -15,6 +15,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { toast } from "sonner"; // Assuming sonner is installed as seen in package.json
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Login() {
     const router = useRouter();
@@ -24,6 +25,8 @@ export default function Login() {
         email: "",
         password: "",
     });
+
+    const { login } = useAuth();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -35,16 +38,12 @@ export default function Login() {
         setIsLoading(true);
 
         try {
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-
-            // Here you would typically make an API call to your backend
-            // const response = await axios.post('/api/auth/login', formData);
-
-            toast.success("Login successful!");
-            router.push("/dashboard"); // Redirect to dashboard or home
+            const success = await login(formData.email, formData.password);
+            if (success) {
+                router.push("/account"); // Redirect to account since it is now protected
+            }
         } catch (error) {
-            toast.error("Invalid credentials. Please try again.");
+            toast.error("An error occurred during login.");
         } finally {
             setIsLoading(false);
         }

@@ -9,8 +9,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Equipment Rent",
-  description: "Equipment Rental Platform",
+  title: "EquipRent | Equipment Rental in Saudi Arabia",
+  description: "The leading equipment rental platform powering Saudi Arabia's Vision 2030 and mega projects.",
   icons: {
     icon: "/icon.svg",
   },
@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 
 import { CartProvider } from "@/contexts/CartContext";
 import { LocationProvider } from "@/contexts/LocationContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export default function RootLayout({
   children,
@@ -27,11 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${inter.className} antialiased`}>
-        <LocationProvider>
-          <CartProvider>
-            {children}
-          </CartProvider>
-        </LocationProvider>
+        <AuthProvider>
+          <LocationProvider>
+            <CartProvider>
+              {children}
+            </CartProvider>
+          </LocationProvider>
+        </AuthProvider>
       </body>
     </html>
   );

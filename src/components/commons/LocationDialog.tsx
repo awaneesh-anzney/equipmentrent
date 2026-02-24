@@ -56,29 +56,39 @@ export function LocationDialog({ children, onLocationSelect }: LocationDialogPro
             <PopoverTrigger asChild>
                 {children}
             </PopoverTrigger>
-            <PopoverContent className="w-[350px] p-6" align="start" sideOffset={10}>
-                <div className="flex flex-col gap-4">
-                    <h3 className="text-xl font-bold text-gray-900">Where is your jobsite?</h3>
+            <PopoverContent className="w-[380px] p-6 rounded-3xl border-2 border-primary/30 bg-white/95 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] shadow-primary/10 text-gray-900" align="start" sideOffset={12}>
+                <div className="flex flex-col gap-5">
+                    <div className="flex items-center gap-3 mb-1">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                            <MapPin className="h-5 w-5 text-primary" />
+                        </div>
+                        <h3 className="text-xl font-bold tracking-tight text-gray-900">Where is your jobsite?</h3>
+                    </div>
 
-                    <div className="relative">
+                    <div className="relative group">
                         <Input
                             placeholder="Enter city or zip code"
-                            className="pr-10 h-11 border-gray-300 text-base"
+                            className="pr-10 h-12 border-gray-200 bg-gray-50/50 focus-visible:ring-primary/20 focus-visible:border-primary focus-visible:bg-white text-base rounded-xl transition-all text-gray-900 placeholder:text-gray-400 shadow-sm shadow-black/5"
                             value={inputValue}
                             onChange={handleInputChange}
                         />
-                        <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <Search className="absolute right-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors" />
 
                         {showSuggestions && suggestions.length > 0 && (
-                            <div className="absolute z-10 w-full bg-white border border-gray-200 rounded-md shadow-lg mt-1 max-h-60 overflow-y-auto">
+                            <div className="absolute z-50 w-full bg-white border border-gray-100 rounded-xl shadow-xl mt-2 max-h-60 overflow-y-auto overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                                 {suggestions.map((city) => (
                                     <div
                                         key={city.zipCode}
-                                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                                        className="px-4 py-3 hover:bg-primary/5 cursor-pointer text-sm border-b border-gray-50 last:border-0 transition-colors flex items-center gap-3"
                                         onClick={() => handleSelectCity(city)}
                                     >
-                                        <div className="font-medium text-gray-900">{city.name}</div>
-                                        <div className="text-gray-500 text-xs">{city.shortName} - {city.zipCode}</div>
+                                        <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center flex-shrink-0">
+                                            <span className="text-xs font-bold text-gray-500">{city.shortName.substring(0, 2)}</span>
+                                        </div>
+                                        <div>
+                                            <div className="font-semibold text-gray-900">{city.name}</div>
+                                            <div className="text-gray-500 text-xs">{city.shortName} • {city.zipCode}</div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -87,9 +97,9 @@ export function LocationDialog({ children, onLocationSelect }: LocationDialogPro
 
                     <Button
                         variant="outline"
-                        className="w-full h-11 border-orange-500 text-orange-600 hover:bg-orange-50 hover:text-orange-700 font-bold uppercase tracking-wide flex items-center gap-2"
+                        className="w-full h-12 border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-white font-bold uppercase tracking-widest text-xs rounded-xl flex items-center gap-2 transition-all group"
                     >
-                        <Locate className="h-5 w-5" />
+                        <Locate className="h-4 w-4 group-hover:animate-pulse" />
                         Use My Current Location
                     </Button>
                 </div>

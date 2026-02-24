@@ -1,0 +1,42 @@
+export const INVOICES_DATA = [
+    {
+        id: "INV-2026-001",
+        date: "Feb 15, 2026",
+        dueDate: "Mar 15, 2026",
+        amount: 15000,
+        status: "Paid",
+        project: "Downtown Excavation",
+    },
+    {
+        id: "INV-2026-002",
+        date: "Feb 18, 2026",
+        dueDate: "Mar 18, 2026",
+        amount: 9500,
+        status: "Pending",
+        project: "Bridge Repair Site B",
+    },
+    {
+        id: "INV-2026-003",
+        date: "Jan 10, 2026",
+        dueDate: "Feb 10, 2026",
+        amount: 4800,
+        status: "Overdue",
+        project: "Highway Expansion",
+    },
+    {
+        id: "INV-2026-004",
+        date: "Jan 05, 2026",
+        dueDate: "Feb 05, 2026",
+        amount: 19000,
+        status: "Paid",
+        project: "Residential Complex A",
+    },
+    {
+        id: "INV-2026-005",
+        date: "Feb 22, 2026",
+        dueDate: "Mar 22, 2026",
+        amount: 12000,
+        status: "Pending",
+        project: "Highrise Commercial Site",
+    },
+];

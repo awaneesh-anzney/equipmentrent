@@ -2,14 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, ShoppingCart, User, Menu, X } from "lucide-react";
+import { Search, User, Menu, X, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 import { CartDialog } from "@/components/commons/CartDialog";
-
-// ... inside component ...
+import { UserDialog } from "@/components/commons/UserDialog";
 
 interface NavbarProps {
     theme?: "light" | "dark";
@@ -18,10 +18,11 @@ interface NavbarProps {
 const Navbar = ({ theme = "dark" }: NavbarProps) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { user } = useAuth();
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 0) {
+            if (window.scrollY > 10) {
                 setIsScrolled(true);
             } else {
                 setIsScrolled(false);
@@ -36,62 +37,39 @@ const Navbar = ({ theme = "dark" }: NavbarProps) => {
         { name: "Rent", href: "/rent" },
         { name: "Buy", href: "/buy" },
         { name: "Service", href: "/service" },
-        { name: "T3 Tech", href: "/tech" },
-        { name: "Company", href: "/company" },
-        { name: "Careers", href: "/careers" },
         { name: "Locations", href: "/locations" },
+        { name: "Company", href: "/company" },
     ];
-
-    const isLight = theme === "light";
-    const textColor = isLight ? "text-gray-900" : "text-white";
-    const mutedTextColor = isLight ? "text-gray-600 hover:text-primary" : "text-white/80 hover:text-white";
-    const borderColor = isLight ? "border-gray-200" : "border-white/10";
-    const inputBg = isLight ? "bg-gray-100 border-gray-200 text-gray-900 placeholder:text-gray-500" : "bg-white/10 border-white/20 text-white placeholder:text-white/50";
-    const buttonVariant = isLight ? "outline" : "outline"; // We'll customize classes
-    const buttonClass = isLight
-        ? "border-primary text-primary hover:bg-primary hover:text-white"
-        : "bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white";
 
     return (
         <nav
             className={cn(
-                "z-50 transition-all duration-300 w-full",
-                isLight ? "sticky top-0 bg-white border-b border-gray-100" : "fixed top-0 left-0 right-0",
-                !isLight && isScrolled ? "bg-black/90 backdrop-blur-md py-2 border-b border-white/10" : "py-4"
+                "fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full border-b",
+                isScrolled
+                    ? "bg-background/80 backdrop-blur-xl border-border/50 py-3 shadow-sm"
+                    : "bg-transparent border-transparent py-5"
             )}
         >
             <div className="container mx-auto px-4 flex items-center justify-between">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2">
-                    {/* EquipmentRent Logo - Text Color Depends on Theme */}
-                    <div className="flex items-center gap-2">
-                        <span className="sr-only">EquipmentRent</span>
-                        {/* Replicating the logo style from screenshot - Cog icon + Text */}
-                        <svg className="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.22-7.52-1.5 5.5-2.28-7.5-3.5 13 8-11 2.5z" />
-                            {/* Simplified geometric shape for "EquipmentShare" like logo */}
-                            <path d="M12 1L9 6H15L12 1Z" className="hidden" />
-                        </svg>
-                        {/* Actual heavy equipment share logo involves a cog. Using a placeholder cog-like SVG path or just text for now */}
-                        <div className="flex flex-col">
-                            <span className={cn("font-black text-xl tracking-tighter leading-none", isLight ? "text-gray-900" : "text-white")}>
-                                EquipmentRent
-                            </span>
-                        </div>
+                <Link href="/" className="flex items-center gap-2 group">
+                    <svg className="w-8 h-8 text-primary transition-transform group-hover:rotate-90 duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    <div className="flex flex-col">
+                        <span className="font-extrabold text-xl tracking-tight leading-none text-foreground flex items-center gap-1">
+                            Equip<span className="text-primary">Rent</span>
+                        </span>
                     </div>
                 </Link>
 
                 {/* Desktop Nav Links */}
-                <div className="hidden lg:flex items-center gap-6">
+                <div className="hidden lg:flex items-center gap-8">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}
-                            className={cn(
-                                "text-sm font-bold uppercase tracking-wide transition-colors",
-                                mutedTextColor,
-                                link.name === "Rent" && isLight ? "text-primary" : ""
-                            )}
+                            className="text-sm font-semibold text-muted-foreground hover:text-primary transition-colors tracking-wide"
                         >
                             {link.name}
                         </Link>
@@ -101,62 +79,56 @@ const Navbar = ({ theme = "dark" }: NavbarProps) => {
                 {/* Right Actions */}
                 <div className="hidden lg:flex items-center gap-4">
                     {/* Search Bar */}
-                    <div className="relative w-64">
-                        <Search className={cn("absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4", isLight ? "text-primary" : "text-white/50")} />
+                    <div className="relative w-56 group">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                         <Input
                             type="text"
-                            placeholder="Search..."
-                            className={cn("pl-9 rounded-sm focus-visible:ring-primary h-10", inputBg)}
+                            placeholder="Find equipment..."
+                            className="pl-9 h-10 bg-muted/50 border-transparent focus-visible:bg-background focus-visible:ring-1 focus-visible:ring-primary focus-visible:border-primary transition-all rounded-full text-sm"
                         />
                     </div>
 
-                    {/* Phone Button */}
-                    <Button variant="outline" className={cn("h-10 rounded-sm font-bold tracking-wide border-2", buttonClass)}>
-                        1.888.80.RENTS
-                    </Button>
+                    <div className="flex items-center gap-2 border-l border-border/50 pl-4">
+                        <UserDialog />
 
-                    {/* Icons */}
-
-                    <Button size="icon" variant="ghost" className={cn("hover:text-primary", textColor)}>
-                        <User className="h-6 w-6" />
-                    </Button>
-                    <CartDialog />
+                        <CartDialog />
+                    </div>
                 </div>
 
                 {/* Mobile Menu Toggle */}
                 <button
-                    className={cn("lg:hidden", textColor)}
+                    className="lg:hidden text-foreground p-2 -mr-2"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
-                    {isMobileMenuOpen ? <X /> : <Menu />}
+                    {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                 </button>
             </div>
 
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
-                <div className={cn("lg:hidden absolute top-full left-0 right-0 p-4 flex flex-col gap-4 shadow-xl border-t", isLight ? "bg-white border-gray-100" : "bg-black/95 border-white/10")}>
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className={cn("text-lg font-bold border-b pb-2", isLight ? "text-gray-900 border-gray-100 hover:text-primary" : "text-white/90 border-white/5 hover:text-primary")}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                    <div className="flex flex-col gap-3 mt-2">
+                <div className="lg:hidden absolute top-full left-0 right-0 p-6 flex flex-col gap-6 shadow-2xl border-t bg-background/95 backdrop-blur-2xl border-border animate-in slide-in-from-top-2 duration-300">
+                    <div className="flex flex-col gap-4">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className="text-lg font-bold text-foreground hover:text-primary transition-colors pb-2 border-b border-border/50"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
+                    </div>
+
+                    <div className="flex flex-col gap-4 mt-4">
                         <div className="relative w-full">
-                            <Search className={cn("absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4", isLight ? "text-gray-400" : "text-white/50")} />
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                             <Input
                                 type="text"
-                                placeholder="Search..."
-                                className={cn("pl-9 rounded-sm", inputBg)}
+                                placeholder="Find equipment..."
+                                className="pl-9 bg-muted h-12 rounded-xl border-transparent"
                             />
                         </div>
-                        <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-sm mt-2 font-bold">
-                            1.888.80.RENTS
-                        </Button>
                     </div>
                 </div>
             )}

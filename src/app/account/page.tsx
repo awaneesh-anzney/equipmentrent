@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function AccountPage() {
     return (
-        <div className="min-h-screen bg-muted/20">
+        <div className="min-h-screen bg-background pt-24 pb-20">
             <AccountDashboard />
         </div>
     );

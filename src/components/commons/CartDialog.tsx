@@ -26,36 +26,40 @@ export function CartDialog() {
     return (
         <Popover open={isCartOpen} onOpenChange={setCartOpen}>
             <PopoverTrigger asChild>
-                <Button size="icon" variant="ghost" className="relative hover:text-[#E85C24] transition-colors">
-                    <ShoppingCart className="h-6 w-6" />
+                <Button size="icon" variant="ghost" className="relative hover:bg-primary/5 hover:text-primary transition-colors rounded-full w-10 h-10">
+                    <ShoppingCart className="h-5 w-5" />
                     {cartItems.length > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-[#E85C24] text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                        <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-[10px] font-black tracking-widest rounded-full h-5 w-5 flex items-center justify-center shadow-sm shadow-primary/20">
                             {cartItems.length}
                         </span>
                     )}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[400px] p-0 shadow-xl border-t-4 border-t-[#E85C24]" align="end" sideOffset={10}>
+            <PopoverContent className="w-[400px] p-0 shadow-2xl rounded-2xl border border-border/50 bg-card overflow-hidden" align="end" sideOffset={12}>
                 {/* Header */}
-                <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-                    <h3 className="font-black text-gray-900 text-lg">Cart ({cartItems.length} Items)</h3>
-                    <button onClick={() => setCartOpen(false)} className="text-gray-400 hover:text-gray-600">
-                        <X className="h-5 w-5" />
+                <div className="p-5 border-b border-border/50 flex items-center justify-between bg-muted/10">
+                    <h3 className="font-black text-foreground text-lg uppercase tracking-tight">Cart <span className="text-muted-foreground ml-1 font-bold text-sm">({cartItems.length})</span></h3>
+                    <button onClick={() => setCartOpen(false)} className="text-muted-foreground hover:text-foreground transition-colors hover:bg-muted p-1.5 rounded-full">
+                        <X className="h-4 w-4" />
                     </button>
                 </div>
 
                 {/* Items List */}
-                <div className="h-[320px] overflow-y-auto">
+                <div className="max-h-[200px] overflow-y-auto overflow-x-hidden custom-scrollbar">
                     {cartItems.length === 0 ? (
-                        <div className="p-8 text-center text-gray-500">
-                            Your cart is empty.
+                        <div className="flex flex-col items-center justify-center p-8  text-center">
+                            <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mb-4">
+                                <ShoppingCart className="h-8 w-8 text-muted-foreground/50" />
+                            </div>
+                            <div className="font-bold text-foreground">Your cart is empty</div>
+                            <div className="text-sm text-muted-foreground mt-1">Start adding some equipment!</div>
                         </div>
                     ) : (
                         <div className="flex flex-col">
                             {cartItems.map((item, index) => (
-                                <div key={index} className="flex gap-4 p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                <div key={index} className="flex gap-4 p-5 border-b border-border/50 hover:bg-muted/10 transition-colors group">
                                     {/* Image */}
-                                    <div className="w-16 h-16 shrink-0 bg-white border border-gray-100 rounded p-1 flex items-center justify-center">
+                                    <div className="w-20 h-20 shrink-0 bg-muted/20 border border-border/30 rounded-xl p-2 flex items-center justify-center group-hover:bg-primary/5 transition-colors">
                                         <img
                                             src={item.equipment.image}
                                             alt={item.equipment.name}
@@ -64,17 +68,17 @@ export function CartDialog() {
                                     </div>
 
                                     {/* Details */}
-                                    <div className="flex-1 min-w-0">
-                                        <h4 className="font-bold text-gray-900 text-sm leading-tight mb-1 truncate">
+                                    <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                        <h4 className="font-bold text-foreground text-sm uppercase tracking-tight leading-tight mb-1 line-clamp-2">
                                             {item.quantity} x {item.equipment.name}
                                         </h4>
-                                        <p className="text-xs text-gray-500 font-medium">
+                                        <p className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">
                                             {formatDateRange(item.startDate, item.endDate)}
                                         </p>
                                     </div>
 
                                     {/* Actions */}
-                                    <div className="flex flex-col gap-2 items-center justify-start pt-1">
+                                    <div className="flex flex-col gap-2 items-end justify-center pt-1 pr-1">
                                         <AddToCartDialog
                                             item={item.equipment}
                                             initialQuantity={item.quantity}
@@ -83,15 +87,15 @@ export function CartDialog() {
                                             initialEndDate={item.endDate}
                                             editItemIndex={index}
                                         >
-                                            <button className="text-[#E85C24] hover:text-[#d64e18]">
-                                                <Edit2 className="h-4 w-4" />
+                                            <button className="text-muted-foreground hover:text-primary transition-colors p-1.5 bg-muted/20 hover:bg-primary/10 rounded-full">
+                                                <Edit2 className="h-3.5 w-3.5" />
                                             </button>
                                         </AddToCartDialog>
                                         <button
                                             onClick={() => removeFromCart(index)}
-                                            className="text-[#E85C24] hover:text-[#d64e18]"
+                                            className="text-muted-foreground hover:text-destructive transition-colors p-1.5 bg-muted/20 hover:bg-destructive/10 rounded-full"
                                         >
-                                            <Trash2 className="h-4 w-4" />
+                                            <Trash2 className="h-3.5 w-3.5" />
                                         </button>
                                     </div>
                                 </div>
@@ -101,16 +105,16 @@ export function CartDialog() {
                 </div>
 
                 {/* Footer */}
-                <div className="p-4 bg-gray-50">
-                    <div className="flex items-center justify-between mb-4">
-                        <span className="font-bold text-gray-900">Estimated Total:</span>
-                        <span className="font-bold text-gray-900 text-lg">SAR {cartTotal.toLocaleString()}</span>
+                <div className="p-5 bg-muted/10 border-t border-border/50">
+                    <div className="flex items-center justify-between mb-5">
+                        <span className="font-bold text-muted-foreground uppercase tracking-widest text-xs">Estimated Total</span>
+                        <span className="font-black text-foreground text-xl">SAR {cartTotal.toLocaleString()}</span>
                     </div>
 
                     <div className="flex flex-col gap-3">
                         <Link href="/rent/cart" passHref>
                             <Button
-                                className="w-full bg-[#E85C24] hover:bg-[#d64e18] text-white font-bold uppercase tracking-wider h-11"
+                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold uppercase tracking-widest h-12 rounded-xl shadow-md shadow-primary/20 hover:-translate-y-0.5 transition-transform"
                                 onClick={() => setCartOpen(false)}
                             >
                                 View Cart & Checkout
@@ -118,7 +122,7 @@ export function CartDialog() {
                         </Link>
                         <Button
                             variant="outline"
-                            className="w-full border-[#E85C24] text-[#E85C24] hover:bg-[#E85C24] hover:text-white font-bold uppercase tracking-wider h-11 bg-white"
+                            className="w-full border-border/50 hover:bg-muted text-foreground font-bold uppercase tracking-widest h-12 rounded-xl"
                             onClick={() => setCartOpen(false)}
                         >
                             Continue Shopping

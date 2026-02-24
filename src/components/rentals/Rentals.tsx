@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Loader2 } from "lucide-react";
+import { ChevronDown, Loader2, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import {
     Table,
@@ -10,6 +10,8 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { RENTALS_DATA } from "@/data/rentals";
 
 export function Rentals() {
     const [isLoading, setIsLoading] = useState(true);
@@ -17,61 +19,59 @@ export function Rentals() {
     // We can simulate an API call or loading state.
     useEffect(() => {
         const timer = setTimeout(() => {
-            // Keep loading to match the image or set to false to show the empty state after a while
-            // For demonstration of the UI from the image, we will let it spin for 5 seconds
             setIsLoading(false);
-        }, 5000);
+        }, 1500);
         return () => clearTimeout(timer);
     }, []);
 
     return (
-        <div className="w-full  mx-auto px-4  ">
+        <div className="w-full px-4 lg:px-6">
             <div className="space-y-8">
                 {/* Header section */}
-                <div>
-                    <div className="flex items-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
-                        <span className="cursor-pointer hover:text-gray-900 transition-colors">YOUR ACCOUNT</span>
-                        <span className="mx-2">/</span>
-                        <span className="text-gray-400">ACTIVE RENTALS</span>
+                <div className="bg-card border border-border/50 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div className="flex items-center text-xs font-bold text-muted-foreground uppercase tracking-widest mb-4">
+                        <span className="cursor-pointer hover:text-primary transition-colors">YOUR ACCOUNT</span>
+                        <span className="mx-2 text-border">/</span>
+                        <span className="text-foreground">ACTIVE RENTALS</span>
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-extrabold text-[#111827] tracking-tight">
+                    <h1 className="text-3xl md:text-5xl font-black text-foreground uppercase tracking-tight">
                         Rental Management
                     </h1>
                 </div>
 
                 {/* Tab section */}
-                <div className="w-full ">
-                    <div className="flex border-b border-gray-200 w-full">
-                        <button className="relative px-6 py-4 text-sm font-bold text-gray-900 uppercase tracking-wide">
+                <div className="w-full bg-card border border-border/50 rounded-3xl shadow-sm overflow-hidden">
+                    <div className="flex border-b border-border/50 w-full bg-muted/10">
+                        <button className="relative px-8 py-5 text-sm font-black text-foreground uppercase tracking-widest bg-card">
                             ACTIVE
-                            <div className="absolute bottom-0 left-0 w-full h-[3px] bg-[#F97316] rounded-t-sm" />
+                            <div className="absolute bottom-0 left-0 w-full h-1 bg-primary rounded-t-full" />
                         </button>
                     </div>
 
                     {/* Table section */}
-                    <div className="w-full overflow-x-auto">
+                    <div className="w-full overflow-x-auto p-2">
                         <Table className="min-w-[900px] w-full border-collapse">
                             <TableHeader>
-                                <TableRow className="border-b border-gray-200 hover:bg-transparent">
-                                    <TableHead className="py-4 px-4 align-middle text-left font-bold text-sm text-gray-900 w-[25%] uppercase whitespace-nowrap">
+                                <TableRow className="border-b border-border/50 hover:bg-transparent">
+                                    <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[25%] uppercase whitespace-nowrap">
                                         Equipment
                                     </TableHead>
-                                    <TableHead className="py-4 px-4 align-middle text-left font-bold text-sm text-gray-900 w-[15%] uppercase cursor-pointer group whitespace-nowrap">
-                                        <div className="flex items-center gap-2 hover:bg-gray-50 p-1 -ml-1 rounded transition-colors w-max">
+                                    <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[15%] uppercase cursor-pointer group whitespace-nowrap">
+                                        <div className="flex items-center gap-2 hover:bg-primary/5 p-2 -ml-2 rounded-lg transition-colors w-max text-foreground">
                                             Start Date
-                                            <ChevronDown className="h-4 w-4 text-[#F97316]" strokeWidth={3} />
+                                            <ChevronDown className="h-4 w-4 text-primary" strokeWidth={3} />
                                         </div>
                                     </TableHead>
-                                    <TableHead className="py-4 px-4 align-middle text-left font-bold text-sm text-gray-900 w-[15%] uppercase whitespace-nowrap">
+                                    <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[15%] uppercase whitespace-nowrap">
                                         End Date
                                     </TableHead>
-                                    <TableHead className="py-4 px-4 align-middle text-left font-bold text-sm text-gray-900 w-[20%] uppercase whitespace-nowrap">
+                                    <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[20%] uppercase whitespace-nowrap">
                                         Jobsite
                                     </TableHead>
-                                    <TableHead className="py-4 px-4 align-middle text-left font-bold text-sm text-gray-900 w-[15%] uppercase whitespace-nowrap">
+                                    <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[15%] uppercase whitespace-nowrap">
                                         Rental #
                                     </TableHead>
-                                    <TableHead className="py-4 px-4 align-middle text-left font-bold text-sm text-gray-900 w-[10%] uppercase whitespace-nowrap">
+                                    <TableHead className="py-5 px-6 align-middle text-left font-bold text-xs text-muted-foreground tracking-widest w-[10%] uppercase whitespace-nowrap">
                                         Actions
                                     </TableHead>
                                 </TableRow>
@@ -81,33 +81,30 @@ export function Rentals() {
                                     <TableRow className="border-none hover:bg-transparent">
                                         <TableCell colSpan={6} className="h-[300px] text-center">
                                             <div className="flex w-full items-center justify-center">
-                                                {/* Custom SVG to match the image's specific loader */}
-                                                <svg
-                                                    className="h-10 w-10 animate-spin text-[#F97316]"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <circle
-                                                        className="opacity-25"
-                                                        cx="12"
-                                                        cy="12"
-                                                        r="10"
-                                                        stroke="currentColor"
-                                                        strokeWidth="4"
-                                                    ></circle>
-                                                    <path
-                                                        className="opacity-100"
-                                                        fill="currentColor"
-                                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                                    ></path>
-                                                </svg>
+                                                <Loader2 className="h-10 w-10 animate-spin text-primary" />
                                             </div>
                                         </TableCell>
                                     </TableRow>
+                                ) : RENTALS_DATA.length > 0 ? (
+                                    RENTALS_DATA.map((rental) => (
+                                        <TableRow key={rental.id} className="hover:bg-muted/30 border-border/50 transition-colors group">
+                                            <TableCell className="py-4 px-6 font-bold whitespace-nowrap text-foreground">{rental.equipment}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm text-muted-foreground whitespace-nowrap">{rental.startDate}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm text-muted-foreground whitespace-nowrap">{rental.endDate}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm font-medium whitespace-nowrap">{rental.jobsite}</TableCell>
+                                            <TableCell className="py-4 px-6 text-sm text-primary font-bold whitespace-nowrap">{rental.id}</TableCell>
+                                            <TableCell className="py-4 px-6 whitespace-nowrap">
+                                                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg hover:bg-primary/10 hover:text-primary" title="Details">
+                                                        <ArrowRight className="w-4 h-4" />
+                                                    </Button>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))
                                 ) : (
                                     <TableRow className="border-none hover:bg-transparent">
-                                        <TableCell colSpan={6} className="py-12 text-center text-gray-500 font-medium h-[200px]">
+                                        <TableCell colSpan={6} className="py-16 text-center text-muted-foreground font-medium h-[200px] text-lg">
                                             No active rentals found.
                                         </TableCell>
                                     </TableRow>

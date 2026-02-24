@@ -13,7 +13,7 @@ export default function RentPage() {
     const { selectedLocation, setSelectedLocation } = useLocation();
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-background pt-24">
             <RentHero selectedLocation={selectedLocation} onLocationChange={setSelectedLocation} />
 
             <div className="container mx-auto px-4 py-8">
