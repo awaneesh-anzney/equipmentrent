@@ -9,8 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Info, Lock } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function Checkout() {
+  const router = useRouter();
   const { cartItems } = useCart();
   const { user } = useAuth();
   const breakdown = calculateCartBreakdown(cartItems);
@@ -33,7 +35,7 @@ export default function Checkout() {
     e.preventDefault();
     // Here you would normally proceed to payment
     console.log("Form Data Submitted:", formData);
-    alert("Proceeding to payment...");
+    router.push("/rent/payment");
   };
 
   if (cartItems.length === 0) {
