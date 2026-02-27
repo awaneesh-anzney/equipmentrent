@@ -6,7 +6,7 @@ import { calculateCartBreakdown, calculateItemDisplayPrice } from "@/lib/pricing
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Info, Lock, CreditCard, ShieldCheck } from "lucide-react";
+import { Info, Lock, CreditCard, ShieldCheck, Wallet, PieChart, Smartphone } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -64,7 +64,7 @@ export default function Payment() {
                 </div>
 
                 {/* Payment Methods Tabs */}
-                <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                     <button
                         onClick={() => setPaymentMethod("card")}
                         className={`flex flex-col items-center justify-center gap-2 h-24 rounded-xl border-2 transition-all ${paymentMethod === "card"
@@ -77,15 +77,58 @@ export default function Payment() {
                     </button>
 
                     <button
+                        onClick={() => setPaymentMethod("mada")}
+                        className={`flex flex-col items-center justify-center gap-2 h-24 rounded-xl border-2 transition-all ${paymentMethod === "mada"
+                                ? "border-primary bg-primary/5 text-primary"
+                                : "border-border/50 bg-muted/30 text-muted-foreground hover:bg-muted"
+                            }`}
+                    >
+                        <CreditCard className="h-6 w-6" />
+                        <span className="font-bold text-sm tracking-widest uppercase">mada</span>
+                    </button>
+
+                    <button
                         onClick={() => setPaymentMethod("apple_pay")}
                         className={`flex flex-col items-center justify-center gap-2 h-24 rounded-xl border-2 transition-all ${paymentMethod === "apple_pay"
                                 ? "border-primary bg-primary/5 text-primary"
                                 : "border-border/50 bg-muted/30 text-muted-foreground hover:bg-muted"
                             }`}
                     >
-                        {/* Apple Pay dummy icon using a div/text for simplicity or an icon */}
                         <div className="h-6 w-6 flex items-center justify-center font-black text-lg leading-none"></div>
                         <span className="font-bold text-sm tracking-widest uppercase">Apple Pay</span>
+                    </button>
+
+                    <button
+                        onClick={() => setPaymentMethod("stc_pay")}
+                        className={`flex flex-col items-center justify-center gap-2 h-24 rounded-xl border-2 transition-all ${paymentMethod === "stc_pay"
+                                ? "border-primary bg-primary/5 text-primary"
+                                : "border-border/50 bg-muted/30 text-muted-foreground hover:bg-muted"
+                            }`}
+                    >
+                        <Smartphone className="h-6 w-6" />
+                        <span className="font-bold text-sm tracking-widest uppercase">STC Pay</span>
+                    </button>
+
+                    <button
+                        onClick={() => setPaymentMethod("tabby")}
+                        className={`flex flex-col items-center justify-center gap-2 h-24 rounded-xl border-2 transition-all ${paymentMethod === "tabby"
+                                ? "border-primary bg-primary/5 text-primary"
+                                : "border-border/50 bg-muted/30 text-muted-foreground hover:bg-muted"
+                            }`}
+                    >
+                        <PieChart className="h-6 w-6" />
+                        <span className="font-bold text-sm tracking-widest uppercase">Tabby</span>
+                    </button>
+
+                    <button
+                        onClick={() => setPaymentMethod("tamara")}
+                        className={`flex flex-col items-center justify-center gap-2 h-24 rounded-xl border-2 transition-all ${paymentMethod === "tamara"
+                                ? "border-primary bg-primary/5 text-primary"
+                                : "border-border/50 bg-muted/30 text-muted-foreground hover:bg-muted"
+                            }`}
+                    >
+                        <Wallet className="h-6 w-6" />
+                        <span className="font-bold text-sm tracking-widest uppercase">Tamara</span>
                     </button>
                 </div>
 
@@ -96,7 +139,7 @@ export default function Payment() {
                     <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -ml-16 -mb-16 pointer-events-none" />
 
                     {paymentMethod === "apple_pay" ? (
-                        <div className="text-center py-12 flex flex-col items-center">
+                        <div className="text-center py-12 flex flex-col items-center relative z-10">
                             <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mb-6 border border-border/50 shadow-inner">
                                 <span className="text-4xl text-foreground"></span>
                             </div>
@@ -111,6 +154,60 @@ export default function Payment() {
                                 <Lock className="h-4 w-4" />
                                 Pay SAR {breakdown.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </Button>
+                        </div>
+                    ) : paymentMethod === "tabby" || paymentMethod === "tamara" ? (
+                        <div className="text-center py-12 flex flex-col items-center relative z-10">
+                            <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mb-6 border border-border/50 shadow-inner">
+                                {paymentMethod === "tabby" ? <PieChart className="w-10 h-10" /> : <Wallet className="w-10 h-10" />}
+                            </div>
+                            <h3 className="text-xl font-bold mb-2 uppercase">Pay with {paymentMethod === "tabby" ? "Tabby" : "Tamara"}</h3>
+                            <p className="text-sm text-muted-foreground max-w-sm mx-auto mb-8">
+                                Split your total of SAR {breakdown.total.toLocaleString(undefined, { minimumFractionDigits: 2 })} into 4 interest-free payments. You will be redirected to {paymentMethod === "tabby" ? "Tabby" : "Tamara"} to complete your purchase.
+                            </p>
+                            <Button
+                                onClick={handleSubmit}
+                                className="w-full h-14 bg-primary hover:bg-primary/90 text-primary-foreground font-black uppercase tracking-widest text-sm rounded-xl shadow-md shadow-primary/20 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+                            >
+                                <Lock className="h-4 w-4" />
+                                Continue to {paymentMethod === "tabby" ? "Tabby" : "Tamara"}
+                            </Button>
+                        </div>
+                    ) : paymentMethod === "stc_pay" ? (
+                        <div className="py-6 space-y-6 relative z-10">
+                            <div className="text-center mb-6">
+                                <h3 className="text-xl font-bold mb-2 uppercase">STC Pay</h3>
+                                <p className="text-sm text-muted-foreground">Enter your STC Pay mobile number to authenticate the payment.</p>
+                            </div>
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="space-y-2">
+                                    <Label htmlFor="stcPhone" className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Mobile Number</Label>
+                                    <div className="relative">
+                                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-bold text-sm">
+                                            +966
+                                        </div>
+                                        <Input
+                                            id="stcPhone"
+                                            name="stcPhone"
+                                            placeholder="5X XXX XXXX"
+                                            required
+                                            className="h-12 bg-background border-border/50 rounded-xl focus-visible:ring-primary font-medium tracking-widest text-lg pl-14"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="pt-6">
+                                    <Button
+                                        type="submit"
+                                        className="w-full h-14 bg-[#4A2D87] hover:bg-[#3d2570] text-white font-black uppercase tracking-widest text-sm rounded-xl shadow-md shadow-[#4A2D87]/20 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+                                    >
+                                        <ShieldCheck className="h-5 w-5" />
+                                        Pay SAR {breakdown.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                    </Button>
+                                    <p className="text-center text-xs text-muted-foreground mt-4 font-medium flex items-center justify-center gap-1.5">
+                                        <Lock className="h-3 w-3" />
+                                        Secure payment with STC Pay
+                                    </p>
+                                </div>
+                            </form>
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
