@@ -42,7 +42,7 @@ export default function CartPage() {
                         </div>
                         <div className="hidden md:block w-px h-8 bg-border/50 mx-4" />
                         <div className="flex items-center gap-2 text-sm md:text-base font-semibold text-muted-foreground">
-                            New to EquipmentRent?
+                            New to Fleetshare360?
                             <Link href="/signup" className="text-primary hover:text-primary/80 transition-colors font-bold underline underline-offset-4 decoration-primary/30 hover:decoration-primary">Create account</Link>
                         </div>
                     </div>

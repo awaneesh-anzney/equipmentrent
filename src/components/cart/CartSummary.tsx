@@ -97,7 +97,7 @@ export function CartSummary({ breakdown }: CartSummaryProps) {
                         </div>
                         <div className="w-full h-px bg-border/50" />
                         <div>
-                            New to EquipmentRent?
+                            New to Fleetshare360?
                             <Link href="/signup" className="text-primary hover:text-primary/80 font-bold ml-1 transition-colors underline-offset-4 hover:underline">Create account</Link>
                         </div>
                     </div>

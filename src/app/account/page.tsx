@@ -2,7 +2,7 @@ import { AccountDashboard } from "@/components/account/AccountDashboard";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Your Account | EquipmentRent",
+    title: "Your Account | Fleetshare360",
     description: "Manage your rentals, view order history, and control your account settings.",
 };
 
