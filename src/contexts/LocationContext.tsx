@@ -14,7 +14,7 @@ export function LocationProvider({ children }: { children: ReactNode }) {
 
     // Optional: Persist to localStorage
     useEffect(() => {
-        const stored = localStorage.getItem("equipmentRent_location");
+        const stored = localStorage.getItem("fleetshare360_location");
         if (stored) {
             setSelectedLocation(stored);
         }
@@ -22,7 +22,7 @@ export function LocationProvider({ children }: { children: ReactNode }) {
 
     const handleSetLocation = (location: string) => {
         setSelectedLocation(location);
-        localStorage.setItem("equipmentRent_location", location);
+        localStorage.setItem("fleetshare360_location", location);
     };
 
     return (

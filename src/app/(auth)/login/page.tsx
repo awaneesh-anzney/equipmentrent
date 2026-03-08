@@ -3,7 +3,7 @@ import Login from '@/components/auth/Login'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Login - EquipmentRent',
+  title: 'Login - Fleetshare360',
   description: 'Sign in to your account',
 }
 

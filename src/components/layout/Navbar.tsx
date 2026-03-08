@@ -58,7 +58,7 @@ const Navbar = ({ theme = "dark" }: NavbarProps) => {
                     </svg>
                     <div className="flex flex-col">
                         <span className="font-extrabold text-xl tracking-tight leading-none text-foreground flex items-center gap-1">
-                            Equip<span className="text-primary">Rent</span>
+                            Fleetshare<span className="text-primary">360</span>
                         </span>
                     </div>
                 </Link>

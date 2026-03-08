@@ -12,7 +12,7 @@ const footerLinks = {
         { label: "Location Directory", href: "/locations" },
     ],
     Company: [
-        { label: "About EquipRent", href: "/about" },
+        { label: "About Fleetshare360", href: "/about" },
         { label: "Vision 2030", href: "/vision-2030" },
         { label: "Careers", href: "/careers" },
         { label: "Contact Us", href: "/contact" },
@@ -32,7 +32,7 @@ const Footer = () => {
                     <div>
                         <Link href="/" className="inline-block mb-6">
                             <span className="font-extrabold text-2xl tracking-tight leading-none text-white flex items-center gap-1">
-                                Equip<span className="text-primary">Rent</span>
+                                Fleetshare<span className="text-primary">360</span>
                             </span>
                         </Link>
                         <p className="text-gray-400 text-sm mb-6 max-w-xs leading-relaxed">
@@ -68,7 +68,7 @@ const Footer = () => {
 
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 gap-4">
                     <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
-                        <span>© {new Date().getFullYear()} EquipRent KSA. All rights reserved.</span>
+                        <span>© {new Date().getFullYear()} Fleetshare360 KSA. All rights reserved.</span>
                         <div className="hidden md:block w-px h-3 bg-white/20 self-center"></div>
                         <div className="flex gap-4">
                             <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
