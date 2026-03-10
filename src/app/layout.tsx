@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Fleetshare360 | Equipment Rental in Saudi Arabia",
+  title: "Fleetshare360 in Saudi Arabia",
   description: "The leading equipment rental platform powering Saudi Arabia's Vision 2030 and mega projects.",
   icons: {
     icon: "/icon.svg",
