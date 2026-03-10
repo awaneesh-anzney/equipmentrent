@@ -85,21 +85,21 @@ export default function ProductClientPage({ equipment, parentCategory, subcatego
                             </h1>
 
                             {/* Pricing Section */}
-                            <div className="grid grid-cols-3 gap-4 mb-8 max-w-lg bg-card border border-border/50 rounded-2xl p-4 md:p-6 shadow-sm">
+                            <div className="grid grid-cols-3 gap-4 mb-8 max-w-2xl bg-card border border-border/50 rounded-2xl p-4 md:p-6 shadow-sm">
                                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                                    <span className="text-2xl lg:text-3xl font-black text-foreground block tracking-tight">
+                                    <span className="text-2xl lg:text-3xl font-black text-foreground block tracking-tight whitespace-nowrap">
                                         {isLocationSet ? `SAR ${dayPrice.toLocaleString()}` : "—"}
                                     </span>
                                     <span className="text-xs text-muted-foreground uppercase tracking-widest font-bold mt-1">/ day</span>
                                 </div>
                                 <div className="flex flex-col items-center md:items-start text-center md:text-left border-l border-border/50 pl-4">
-                                    <span className="text-2xl lg:text-3xl font-black text-foreground block tracking-tight">
+                                    <span className="text-2xl lg:text-3xl font-black text-foreground block tracking-tight whitespace-nowrap">
                                         {isLocationSet ? `SAR ${weekPrice.toLocaleString()}` : "—"}
                                     </span>
                                     <span className="text-xs text-muted-foreground uppercase tracking-widest font-bold mt-1">/ week</span>
                                 </div>
                                 <div className="flex flex-col items-center md:items-start text-center md:text-left border-l border-border/50 pl-4">
-                                    <span className="text-2xl lg:text-3xl font-black text-foreground block tracking-tight">
+                                    <span className="text-2xl lg:text-3xl font-black text-foreground block tracking-tight whitespace-nowrap">
                                         {isLocationSet ? `SAR ${fourWeekPrice.toLocaleString()}` : "—"}
                                     </span>
                                     <span className="text-xs text-muted-foreground uppercase tracking-widest font-bold mt-1">/ 4-week</span>
